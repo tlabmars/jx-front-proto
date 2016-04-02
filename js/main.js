@@ -1,3 +1,5 @@
+(function() {
+
 
 //scene en cours, avec la valeur de depart.
 var currentSceneId = 1;
@@ -8,6 +10,23 @@ var jxServer = new JX.Server();
 //initialisation des variables du jeu. 
 jxServer.variables.init("inspiration", 0);
 
+var buttonEventHandler = [];
+
+var buttons = [];
+
+
+
+//pointe vers les elements HTML
+var titleElement = document.getElementById("mainTitle");
+var mediaElement = document.getElementById("medias");
+var connectionElement = document.getElementById("connections");
+var playerElement = document.getElementById("player");
+var inputElement = document.getElementById("playerInput");
+var domButtons = connectionElement.querySelectorAll('.pure-button');
+for (var i = 0; i < domButtons.length; i++) {
+	buttons.push(domButtons[i]);
+}
+
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){
 	
@@ -15,20 +34,18 @@ var handleScene = function(jsonData){
 	console.log(jsonData);
 	
 	currentSceneId = jsonData.id;
-
-	//pointe vers les elements HTML
-	var titleElement = document.getElementById("mainTitle");
-	var mediaElement = document.getElementById("medias");
-	var connectionElement = document.getElementById("connections");
-	var playerElement = document.getElementById("player");
-	var inputElement = document.getElementById("playerInput");
 	
 	//reset elements
 	titleElement.innerHTML = "";
 	mediaElement.innerHTML = "";
-	connectionElement.innerHTML = "";
 	playerElement.innerHTML = "";
 	inputElement.value="";
+	// Reset buttons event listeners
+	buttons.forEach(function(button, index) {
+		if (buttonEventHandler[index]) {
+			button.removeEventListener('click', buttonEventHandler[index]);
+		}
+	});
 	
 	//prise en compte des actions (mise a jour des variables de la scène, s'il y en a)
 	jxServer.variables.update(jsonData.actions);
@@ -53,20 +70,18 @@ var handleScene = function(jsonData){
 		}
 	});
 
-	jsonData.connections.forEach(function(item){
+	jsonData.connections.forEach(function(item, index) {
 		if (! item.label) {
 			return;
 		}
-		
-		var newConnectionElement = document.createElement("li");
-		newConnectionElement.innerHTML = item.label;
-		newConnectionElement.innerHTML += " (vers la scène #" + item.childSceneId + ")";
 
-		newConnectionElement.addEventListener("click", function(){
+		buttonEventHandler[index] = function() {
 			jxServer.requestScene(item.childSceneId, handleScene);
-		});
+		}
 
-		connectionElement.appendChild(newConnectionElement);
+		buttons[index].addEventListener('click', buttonEventHandler[index]);
+		buttons[index].innerHTML = item.label;
+		
 	});
 
 }
@@ -98,3 +113,5 @@ document.querySelector("#patternForm").addEventListener("submit", function(){
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
 jxServer.requestScene(currentSceneId, handleScene);
+
+})();
