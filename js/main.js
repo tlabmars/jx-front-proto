@@ -106,7 +106,7 @@ document.querySelector("#patternForm").addEventListener("submit", function(){
 //******
 jxServer.requestScene(currentSceneId, handleScene);
 
-jxServer.listenImageCode(document.querySelector("#fileInput"), jxServer.redirectToUrl);
+//jxServer.listenImageCode(document.querySelector("#fileInput"), jxServer.redirectToUrl);
 
 //gestion de la validation du formulaire
 document.querySelector("#player").addEventListener("click", function(){
