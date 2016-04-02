@@ -9,7 +9,7 @@ qrcode.callback = function(data){
 	document.getElementById("fileFormLabel").innerHTML += data;
 };
 
-//gestion de la validation du formulaire
+// gestion de la validation du formulaire
 inputFile.addEventListener("change", function(){
 	
 	inputFile.innerHTML += "submit,";
