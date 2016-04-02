@@ -11,81 +11,65 @@
         
         <!-- PURE & LEAFLET CSS -->
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-
-        <!-- JQUERY, LEAFLET, STAMEN MAPS JS-->
-        <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>        
-        <!-- <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script> 
-        <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script> -->
-        <script>
-            function goBack() {
-                window.history.back();
-            }
-        </script>
         
         <!-- GOOGLE & FONTAWESOME FONTS -->
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,700|Inconsolata&subset=latin" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         
 
         <style type="text/css">
             body, .pure-g [class *= "pure-u"] {
                 /* Set your content font stack here: */
-                font-family: 'Helvetica', sans-serif;
-                color:black;
+                font-family: "HelveticaNeue", sans-serif;
+                background-color: whitesmoke;
+                color:#00A0E0;
             
             }
             h1, h2, h3, h4, h5, h6 {
-                font-family: 'Helvetica', sans-serif;            
+                font-family: "HelveticaNeue", sans-serif;            
             }
             
-            .meta {
-                font-size: 80%;
-                color: grey;
-            
+            a {
+            color:whitesmoke;
             }
-            .pure-g {
-                background-color: whitesmoke;
-            }
-            .header {
             
+            #header {       
                 min-height: 60px;
-                background-color:beige;
-                text-align:center;
-                padding-top:20px;
-                padding-bottom:20px;
+                padding:15px;
+                background-color: #00A0E0;
+                color:whitesmoke;
             }
-          
-            
-            #map {
-                height:22em;
-            
+            #buttons {
+                padding:15px;
+                text-align: center;
             }
+            ul.nav {
+                display:flex;
+                flex-direction:row;
+                justify-content: space-between;
+                list-style: none;
             }
-            
-            @media screen and (max-width: 35.5em){
-                
-                .feature-img{
-                    height:15em;
-                }
-            
-            }
+
         </style>
 
     </head>
     <body>
         <div class="pure-g">
             <div class="pure-u-1">
-                <div class="header">
-                    <div onclick="goBack()"><i class="fa fa-angle-left fa-2x" style="position:fixed; left:15px; top:15px; color:black;"></i></div>
-                    <div class="titre">Le Réveil de la Joliette</div>
-                    <div></div>
+                <div id="header">
+                    <ul class="nav">
+                        <li>Picto sens</li>
+                        <li style="font-size:110%; font-weight:700;">Le réveil de la Joliette</li>
+                        <li><a href="#">À propos</a></li>
+                    </ul>
                 </div>
-                </div>              
-            
-            <div class="pure-u-1" style="padding:15px;">
-                <h1>Tends l'oreille</h1>
-                <p>J'aimerai tant entendre à nouveau...<br /> Tu seras mes oreilles.<br /> Ici avant, il y avait des voix, commme un chœur. <br />Des hommes, nombreux, leurs voix rudes, comme un cuir tanné, des femmes, aussi, leurs chants d'oiseaux bavards... Et tout ce petit monde, à mes pieds, à la tâche, nuit et jour sans relâche.<br />Qu'entends-tu aujourd'hui lorsque tu <a href="../1/story.html">tends l'oreille</a> ?</p>              
+                <div id="medias"></div>
+                <div id="text">&nbsp;</div>
+                <div id="form"></div>
+                <div id="buttons">
+                    <button class="pure-button">BOUTON</button>
+                    <button class="pure-button">BOUTON</button>
+                    <button class="pure-button">BOUTON</button>
+                </div>            
             </div>
 
         </div>
@@ -95,8 +79,8 @@
                 function setDimensions() {
                     windowHeight = $(window).innerHeight();
                     windowWidth = $(window).innerWidth();
-                    $('.pure-g').css('min-height', windowHeight);
-                    $('.pure-g').css('width', windowWidth);
+                    $('body').css('min-height', windowHeight);
+                    $('body').css('width', windowWidth);
                     
                 };
                 setDimensions();
@@ -104,42 +88,6 @@
                 $(window).resize(function() {
                     setDimensions();
                 });
-                
-                var layer = new L.StamenTileLayer("toner");
-                var map = new L.Map("map", {
-                    center: new L.LatLng(43.3052, 5.3664),
-                    zoom: 18
-                });
-                map.addLayer(layer);
-                
-                var blackIcon = L.icon({
-                    iconUrl: 'marker-black.png',
-                    shadowUrl: 'marker-shadow.png',
-
-                    iconSize:     [32, 49], // size of the icon
-                    shadowSize:   [50, 50], // size of the shadow
-                    iconAnchor:   [4, 60], // point of the icon which will correspond to marker's location
-                    shadowAnchor: [4, 62],  // the same for the shadow
-                    popupAnchor:  [10, -65] // point from which the popup should open relative to the iconAnchor
-                });
-                
-                var marker2 = L.marker([43.3053, 5.3658], {icon: blackIcon}).addTo(map);
-                var location = map.locate();
-                function onLocationFound(e) {
-                    
-                    var location = e.latLng;
-                    console.log(location);
-                    var distance =  L.latLng(location.lat, location.lng).distanceTo([43.3053, 5.3658]);  /* KO : no comprendo how it is done (get user lat & lng via locate then get distance to marker via distanceTo) */
-                   
-                    $( ".distance" ).append( " " + distance + " mètres" ); // KO
-                    
-                    
-                }
-
-                map.on('locationfound', onLocationFound);
-
-                
-            });
         </script>
         
     </body>
