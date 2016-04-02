@@ -18,7 +18,6 @@ JX.Server = function(){
 	this.variables = new JX.Vars();
 	this.variables.init("_jx", 1);
 
-
 	//Request scene details.
 	this.requestScene = function(sceneId, callbackSuccess, callbackError){
 		this.makeJsonRequest("api/scene/" + sceneId, callbackSuccess, callbackError);

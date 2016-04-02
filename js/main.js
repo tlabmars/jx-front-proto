@@ -100,7 +100,7 @@ document.querySelector("#patternForm").addEventListener("submit", function(){
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
 jxServer.requestScene(currentSceneId, handleScene);
-
+jxServer.listenImageCode(document.querySelector("#fileInput"), jxServer.redirectToUrl);
 
 //gestion de la validation du formulaire
 document.querySelector("#player").addEventListener("click", function(){
