@@ -9,6 +9,8 @@ var jxServer = new JX.Server();
 
 //initialisation des variables du jeu. 
 jxServer.variables.init("inspiration", 0);
+//tente de lire les valeurs du localstorage
+jxServer.variables.readLocal();
 
 var buttonEventHandler = [];
 
@@ -103,5 +105,19 @@ document.querySelector("#patternForm").addEventListener("submit", function(){
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
 jxServer.requestScene(currentSceneId, handleScene);
+
+jxServer.listenImageCode(document.querySelector("#fileInput"), jxServer.redirectToUrl);
+
+//gestion de la validation du formulaire
+document.querySelector("#player").addEventListener("click", function(){
+	var res = confirm("Reset variables + reload ?");
+	
+	if (res) {
+		jxServer.variables.resetLocal();
+		window.location.reload();
+	}
+	
+});
+
 
 })();
