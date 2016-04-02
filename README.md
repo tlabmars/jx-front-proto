@@ -1,1 +1,1 @@
-# jx-front-proto
+# jx-front-proto / EQ3
