@@ -1,12 +1,13 @@
 
 //scene en cours, avec la valeur de depart.
-var currentSceneId = 1;
+var currentSceneId = 19;
 
 //preparation de jxServer
 var jxServer = new JX.Server();
 
 //initialisation des variables du jeu. 
 jxServer.variables.init("inspiration", 0);
+jxServer.variables.init("timer",0); //si on doit donner un indice au bout d'un certain temps (on l'utilisera certainement pour la géoloc, penser à faire un arrondi en secondes)
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){
@@ -33,6 +34,7 @@ var handleScene = function(jsonData){
 	//prise en compte des actions (mise a jour des variables de la scène, s'il y en a)
 	jxServer.variables.update(jsonData.actions);
 
+
 	//affichage
 	playerElement.innerHTML = "Votre score d'inspiration : " + jxServer.variables.get("inspiration");
 
@@ -46,7 +48,7 @@ var handleScene = function(jsonData){
 			mediaElement.innerHTML += "<p>" + item.content + "</p>";	
 		} 
 
-		if (item.format == "image") {
+		if (item.format == "img") {
 			var newImageElement = document.createElement("img");
 			newImageElement.setAttribute("src", item.content);
 			mediaElement.appendChild(newImageElement);

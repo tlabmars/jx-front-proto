@@ -1,3 +1,30 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    box-sizing: border-box;
+    font-family: bitter;
+    font-size: 18px;
+    line-height: 26px;
+    
+}
+
+body {
+
+    background-color: black;
+    
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    box-sizing: border-box;
+    color: white;
+}
+
+
+
 #fileFormLabel {
 	border: 1px solid black;
 	padding: 0.5em;
@@ -12,4 +39,61 @@
 	overflow: hidden;
 	position: absolute;
 	z-index: -1;
+}
+.mainContainer {
+    background: lightgrey;
+    min-width: 100vw;
+    min-height: 100vh;
+    margin: 0px;
+    position: absolute;
+    overflow: auto;
+    text-align: center;
+    border: 2vh solid white;
+    
+
+}
+
+#mainTitle {
+    display: inline-block;
+    border: 2px solid white;
+/*    border-radius: 2px;*/
+    padding: 20px;
+}
+
+h1 {
+    margin-top: 10vh;
+    font-size: 28px;
+    font-family: helvetica;
+    font-weight: 100;
+}
+
+ul {
+    list-style: none;
+    text-align: center;
+}
+
+li{
+    color: white;
+/*    background: white;*/
+    border: 2px solid white;
+/*    border-radius: 2px;*/
+    padding: 1vw;
+    margin-bottom: 2vw;
+    display: inline-block;
+    margin: auto;
+    
+}
+
+input{
+    color: black;
+}
+#medias {
+    width: 60%;
+    margin:  10vw auto;
+}
+
+img{
+    background-color: white;
+    width: 100%;
+    margin: 2vh auto;
 }
