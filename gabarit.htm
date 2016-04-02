@@ -78,19 +78,23 @@
         </div>
         
         <script>
-            $(document).ready(function() {
-                function setDimensions() {
-                    windowHeight = $(window).innerHeight();
-                    windowWidth = $(window).innerWidth();
-                    $('body').css('min-height', windowHeight);
-                    $('body').css('width', windowWidth);
+            window.addEventListener('load', function() {
+                
+                var body = document.querySelector('body');
+                
+                var setDimensions = function() {
+                    debugger;
+                    body.style.minHeight = window.innerHeight + 'px';
+                    body.style.width = window.innerWidth + 'px';
                     
                 };
+                
                 setDimensions();
 
-                $(window).resize(function() {
+                window.addEventListener('resize', function() {
                     setDimensions();
                 });
+            });
         </script>
         
     </body>
