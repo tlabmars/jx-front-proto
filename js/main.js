@@ -17,11 +17,10 @@ var buttons = [];
 
 
 //pointe vers les elements HTML
-var titleElement = document.getElementById("mainTitle");
 var mediaElement = document.getElementById("medias");
-var connectionElement = document.getElementById("connections");
-var playerElement = document.getElementById("player");
-var inputElement = document.getElementById("playerInput");
+var connectionElement = document.getElementById("buttons");
+//var playerElement = document.getElementById("player");
+//var inputElement = document.getElementById("playerInput");
 var domButtons = connectionElement.querySelectorAll('.pure-button');
 for (var i = 0; i < domButtons.length; i++) {
 	buttons.push(domButtons[i]);
@@ -36,10 +35,9 @@ var handleScene = function(jsonData){
 	currentSceneId = jsonData.id;
 	
 	//reset elements
-	titleElement.innerHTML = "";
 	mediaElement.innerHTML = "";
-	playerElement.innerHTML = "";
-	inputElement.value="";
+	//playerElement.innerHTML = "";
+	//inputElement.value="";
 	// Reset buttons event listeners
 	buttons.forEach(function(button, index) {
 		if (buttonEventHandler[index]) {
@@ -50,14 +48,6 @@ var handleScene = function(jsonData){
 	//prise en compte des actions (mise a jour des variables de la scène, s'il y en a)
 	jxServer.variables.update(jsonData.actions);
 
-	//affichage
-	playerElement.innerHTML = "Votre score d'inspiration : " + jxServer.variables.get("inspiration");
-
-	//titre de la page
-	titleElement.innerHTML = "Scène #" + jsonData.id ;
-	titleElement.innerHTML += " : " + jsonData.title ;
-	titleElement.innerHTML += " (" + jsonData.project.title + ")";
-	
 	jsonData.medias.forEach(function(item){
 		if (item.format == "text") {
 			mediaElement.innerHTML += "<p>" + item.content + "</p>";	
