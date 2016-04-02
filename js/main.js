@@ -46,7 +46,11 @@ var handleScene = function(jsonData){
 			mediaElement.innerHTML += "<p>" + item.content + "</p>";	
 		} 
 
-		//gérer tous les autres formats ici...
+		if (item.format == "image") {
+			var newImageElement = document.createElement("img");
+			newImageElement.setAttribute("src", item.content);
+			mediaElement.appendChild(newImageElement);
+		}
 	});
 
 	jsonData.connections.forEach(function(item){
