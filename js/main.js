@@ -7,7 +7,12 @@ var jxServer = new JX.Server();
 
 //initialisation des variables du jeu. 
 jxServer.variables.init("inspiration", 0);
+
 jxServer.variables.init("timer",0); //si on doit donner un indice au bout d'un certain temps (on l'utilisera certainement pour la géoloc, penser à faire un arrondi en secondes)
+
+//tente de lire les valeurs du localstorage
+jxServer.variables.readLocal();
+
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){
@@ -100,3 +105,16 @@ document.querySelector("#patternForm").addEventListener("submit", function(){
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
 jxServer.requestScene(currentSceneId, handleScene);
+jxServer.listenImageCode(document.querySelector("#fileInput"), jxServer.redirectToUrl);
+
+//gestion de la validation du formulaire
+document.querySelector("#player").addEventListener("click", function(){
+	var res = confirm("Reset variables + reload ?");
+	
+	if (res) {
+		jxServer.variables.resetLocal();
+		window.location.reload();
+	}
+	
+});
+
