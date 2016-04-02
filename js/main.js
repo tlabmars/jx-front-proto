@@ -7,6 +7,8 @@ var jxServer = new JX.Server();
 
 //initialisation des variables du jeu. 
 jxServer.variables.init("inspiration", 0);
+//tente de lire les valeurs du localstorage
+jxServer.variables.readLocal();
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){
@@ -98,3 +100,16 @@ document.querySelector("#patternForm").addEventListener("submit", function(){
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
 jxServer.requestScene(currentSceneId, handleScene);
+
+
+//gestion de la validation du formulaire
+document.querySelector("#player").addEventListener("click", function(){
+	var res = confirm("Reset variables + reload ?");
+	
+	if (res) {
+		jxServer.variables.resetLocal();
+		window.location.reload();
+	}
+	
+});
+
