@@ -39,10 +39,6 @@ body > div {
     position: absolute;
 }
 
-body > div > div {
-	position: relative;
-}
-
 #header {       
     padding:15px;
     color:whitesmoke;
