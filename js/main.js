@@ -109,15 +109,15 @@ jxServer.requestScene(currentSceneId, handleScene);
 //jxServer.listenImageCode(document.querySelector("#fileInput"), jxServer.redirectToUrl);
 
 //gestion de la validation du formulaire
-document.querySelector("#player").addEventListener("click", function(){
-	var res = confirm("Reset variables + reload ?");
+// document.querySelector("#player").addEventListener("click", function(){
+// 	var res = confirm("Reset variables + reload ?");
 	
-	if (res) {
-		jxServer.variables.resetLocal();
-		window.location.reload();
-	}
+// 	if (res) {
+// 		jxServer.variables.resetLocal();
+// 		window.location.reload();
+// 	}
 	
-});
+// });
 
 
 })();
