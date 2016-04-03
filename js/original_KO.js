@@ -1,8 +1,11 @@
-//scene en cours, avec la valeur de depart.
-var currentSceneId = 79;
+(function() {
 
 //preparation de jxServer
-var jxServer = new JX.Server();
+var jxServer = window.jxServer = new JX.Server();
+
+//scene en cours, avec la valeur de depart.
+var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) || 79;
+
 var fonctionFullscreen;
 
 //initialisation des variables du jeu. 
@@ -11,10 +14,6 @@ jxServer.variables.init("vue", 0);
 jxServer.variables.init("indiceVue", 0);
 
 var mainContainer=document.getElementById("container");
-
-
-
-
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){
@@ -31,6 +30,7 @@ var handleScene = function(jsonData){
     console.log(jsonData);
 
     currentSceneId = jsonData.id;
+    sessionStorage.setItem("JX_lastSeenScene", jsonData.id);
 
     //pointe vers les elements HTML
     var mediaElement = document.getElementById("medias");
@@ -138,3 +138,5 @@ document.querySelector("form").addEventListener("submit", function(){
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
 jxServer.requestScene(currentSceneId, handleScene);
+
+})();

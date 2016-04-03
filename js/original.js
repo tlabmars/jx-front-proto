@@ -1,36 +1,31 @@
-//scene en cours, avec la valeur de depart.
-var currentSceneId = 9;
+(function() {
 
+debugger;
+    
 //preparation de jxServer
-var jxServer = new JX.Server();
-var fonctionFullscreen;
+var jxServer = window.jxServer = new JX.Server();
+
+//scene en cours, avec la valeur de depart.
+var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) || 79;
+
 
 //initialisation des variables du jeu. 
+jxServer.variables.init("geoloc", "off");
+jxServer.variables.init("beenthere", 0);
 jxServer.variables.init("vue", 0);
 jxServer.variables.init("indiceVue", 0);
-jxServer.variables.init("geoloc", "off");
-
-var mainContainer=document.getElementById("container");
-
-
-
+jxServer.variables.init("lastSeenScene", 9);
 
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){
-    
-    
-    if (fonctionFullscreen) {
-        
-        mainContainer.removeEventListener("click", fonctionFullscreen);
-        fonctionFullscreen = undefined;
-    
-    }
 
     console.log("handleScene receive JSON data : ");
     console.log(jsonData);
 
     currentSceneId = jsonData.id;
+    debugger;
+    jxServer.variables.update("lastSeenScene", jsonData.id);
 
     //pointe vers les elements HTML
     var mediaElement = document.getElementById("medias");
@@ -51,7 +46,7 @@ var handleScene = function(jsonData){
                 mediaElement.innerHTML += "<h1>" + item.content + "</h1>";
             }
             else{
-                mediaElement.innerHTML += "<p>" + item.content + "</p>";
+                mediaElement.innerHTML += "<p class='text'>" + item.content + "</p>";
             }
             	
         } 
@@ -69,43 +64,32 @@ var handleScene = function(jsonData){
         if (! item.label) {
             return;
         }
-        
-        if (item.position == "100")
-
-        {
-            
-            fonctionFullscreen = function(){
-                jxServer.requestScene(item.childSceneId, handleScene);
-            };
-            
-            mainContainer.addEventListener("click", fonctionFullscreen);
-
-        }
-              
-            else {
                 
-                if (item.position == "105") {
+            if (item.position == "105") {
 
-                    var newConnectionElement = document.createElement("i");
-                    newConnectionElement.setAttribute("class", "fa fa-chevron-right fa-2x");
-                    newConnectionElement.addEventListener("click", function(){
-                    jxServer.requestScene(item.childSceneId, handleScene);
-                    });
-
-                    connectionElement.appendChild(newConnectionElement);
-                }
-                else {
-                var newConnectionElement = document.createElement("button");
-                newConnectionElement.innerHTML = item.label;
-                newConnectionElement.setAttribute("class", "pure-button pure-button-primary");
-                newConnectionElement.setAttribute("style", "margin-right:20px;");
+                var newConnectionElement = document.createElement("i");
+                newConnectionElement.setAttribute("class", "fa fa-chevron fa-4x");
                 newConnectionElement.addEventListener("click", function(){
                     jxServer.requestScene(item.childSceneId, handleScene);
                 });
 
                 connectionElement.appendChild(newConnectionElement);
+            }
+            else {
+            var newConnectionElement = document.createElement("button");
+            newConnectionElement.innerHTML = item.label;
+            newConnectionElement.setAttribute("class", "pure-button pure-button-primary");
+            newConnectionElement.setAttribute("style", "margin-right:20px;");
+            newConnectionElement.addEventListener("click", function(){
+                jxServer.requestScene(item.childSceneId, handleScene);
+                if (item.childSceneId == 10) {
+                    var geoloc = "on";
+                
                 }
-        }
+            });
+
+            connectionElement.appendChild(newConnectionElement);
+            }
     });
 
 }
@@ -137,3 +121,4 @@ document.querySelector("form").addEventListener("submit", function(){
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
 jxServer.requestScene(currentSceneId, handleScene);
+})();
