@@ -1,14 +1,18 @@
 
 //scene en cours, avec la valeur de depart.
-var currentSceneId = 131;
+var currentSceneId = 26;
 
 //preparation de jxServer
 var jxServer = new JX.Server();
+
+var basePictoUrl = "http://jolietteconnexions.com/2/mediasgraphique/";
 
 //initialisation des variables du jeu. 
 jxServer.variables.init("finA", 0);
 jxServer.variables.init("finB", 0);
 jxServer.variables.init("finC", 0);
+
+jxServer.variables.readLocal();
 
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
@@ -34,9 +38,9 @@ var handleScene = function(jsonData){
 
 	
 	//titre de la page
-	titleElement.innerHTML = "Scène #" + jsonData.id ;
+	/*titleElement.innerHTML = "Scène #" + jsonData.id ;
 	titleElement.innerHTML += " : " + jsonData.title ;
-	titleElement.innerHTML += " (" + jsonData.project.title + ")";
+	titleElement.innerHTML += " (" + jsonData.project.title + ")";*/
 	
 	jsonData.medias.forEach(function(item){
 		if (item.format == "text") {
@@ -67,10 +71,21 @@ var handleScene = function(jsonData){
 		if (! item.label) {
 			return;
 		}
-		
+
 		var newConnectionElement = document.createElement("li");
-		newConnectionElement.innerHTML = item.label;
 		
+
+		if (item.label.substr(-4) == ".png") {
+			var src = basePictoUrl + item.label;
+			var img = document.createElement("img");
+			img.setAttribute("src", src);
+
+			newConnectionElement.appendChild(img);
+
+		} else {
+			newConnectionElement.innerHTML = item.label;
+		}
+
 		newConnectionElement.addEventListener("click", function(){
 			jxServer.requestScene(item.childSceneId, handleScene);
 		});

@@ -1,3 +1,29 @@
-#connexions li {
-		
+h1 {
+	display: none;
 }
+
+#medias img {
+	width: 100%;
+}
+
+#connections{
+	padding: 0;
+}
+
+#connections li {
+	list-style: none;
+
+	padding: 1em;
+	margin: 1em;
+
+	text-align: center;
+	cursor: pointer; 
+	
+	width: 20%;
+	float:right;
+}
+
+#connections li img {
+	width: 100%;
+}
+
