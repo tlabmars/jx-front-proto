@@ -18,6 +18,13 @@ jxServer.variables.readLocal();
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){
 	
+	if (jsonData.data) {
+		document.body.setAttribute("class", jsonData.data);
+	} else {
+		document.body.setAttribute("class", "");
+	}
+	
+
 	console.log("handleScene receive JSON data : ");
 	console.log(jsonData);
 	
