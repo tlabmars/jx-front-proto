@@ -9,8 +9,11 @@ var jxServer = new JX.Server();
 
 //initialisation des variables du jeu. 
 jxServer.variables.init("inspiration", 0);
+//jxServer.variables.init("latitude", 0);
+//jxServer.variables.init("longitude", 0);
 //tente de lire les valeurs du localstorage
 jxServer.variables.readLocal();
+
 
 var buttonEventHandler = [];
 
@@ -27,6 +30,8 @@ var domButtons = connectionElement.querySelectorAll('.pure-button');
 for (var i = 0; i < domButtons.length; i++) {
 	buttons.push(domButtons[i]);
 }
+
+//jxServer.handleLatitudeLongitude();
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){
