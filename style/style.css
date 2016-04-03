@@ -43,3 +43,12 @@ h1 {
 
 	background: #dedede;
 }
+
+/*nb_* = nombre de connexions trouvées*/
+.portrait #connections.nb_3 li {
+	width: 33.3%;
+}
+
+.portrait #connections.nb_4 li {
+	width: 25%;
+}

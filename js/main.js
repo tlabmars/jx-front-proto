@@ -1,6 +1,6 @@
 
 //scene en cours, avec la valeur de depart.
-var currentSceneId = 26;
+var currentSceneId = 111;//26;
 
 //preparation de jxServer
 var jxServer = new JX.Server();
@@ -73,12 +73,13 @@ var handleScene = function(jsonData){
 			mediaElement.appendChild(audioElement);
 		}
 	});
-
+	var totalConnexion = 0;
 	jsonData.connections.forEach(function(item){
 		if (! item.label) {
 			return;
 		}
-
+		//total des connexions trouvées suaf pattern portrait, qcm,...
+		totalConnexion ++;
 		var newConnectionElement = document.createElement("li");
 		
 
@@ -93,12 +94,17 @@ var handleScene = function(jsonData){
 			newConnectionElement.innerHTML = item.label;
 		}
 
+
 		newConnectionElement.addEventListener("click", function(){
 			jxServer.requestScene(item.childSceneId, handleScene);
 		});
 
 		connectionElement.appendChild(newConnectionElement);
 	});
+
+	//cretaion class css nb2
+	var classConnexion = "nb_" + totalConnexion;
+	connectionElement.setAttribute("class", classConnexion);
 
 }
 
