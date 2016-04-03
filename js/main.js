@@ -1,0 +1,123 @@
+(function() {
+
+
+//scene en cours, avec la valeur de depart.
+var currentSceneId = 1;
+
+//preparation de jxServer
+var jxServer = new JX.Server();
+
+//initialisation des variables du jeu. 
+jxServer.variables.init("inspiration", 0);
+//tente de lire les valeurs du localstorage
+jxServer.variables.readLocal();
+
+var buttonEventHandler = [];
+
+var buttons = [];
+
+
+
+//pointe vers les elements HTML
+var mediaElement = document.getElementById("medias");
+var connectionElement = document.getElementById("buttons");
+//var playerElement = document.getElementById("player");
+//var inputElement = document.getElementById("playerInput");
+var domButtons = connectionElement.querySelectorAll('.pure-button');
+for (var i = 0; i < domButtons.length; i++) {
+	buttons.push(domButtons[i]);
+}
+
+//cette fonction sera appellee quand le JSON de la scene sera recu.
+var handleScene = function(jsonData){
+	
+	console.log("handleScene receive JSON data : ");
+	console.log(jsonData);
+	
+	currentSceneId = jsonData.id;
+	
+	//reset elements
+	mediaElement.innerHTML = "";
+	//playerElement.innerHTML = "";
+	//inputElement.value="";
+	// Reset buttons event listeners
+	buttons.forEach(function(button, index) {
+		if (buttonEventHandler[index]) {
+			button.removeEventListener('click', buttonEventHandler[index]);
+		}
+	});
+	
+	//prise en compte des actions (mise a jour des variables de la scène, s'il y en a)
+	jxServer.variables.update(jsonData.actions);
+
+	jsonData.medias.forEach(function(item){
+		if (item.format == "text") {
+			mediaElement.innerHTML += "<p>" + item.content + "</p>";	
+		} 
+
+		if (item.format == "image") {
+			var newImageElement = document.createElement("img");
+			newImageElement.setAttribute("src", item.content);
+			mediaElement.appendChild(newImageElement);
+		}
+	});
+
+	jsonData.connections.forEach(function(item, index) {
+		if (! item.label) {
+			return;
+		}
+
+		buttonEventHandler[index] = function() {
+			jxServer.requestScene(item.childSceneId, handleScene);
+		}
+
+		buttons[index].addEventListener('click', buttonEventHandler[index]);
+		buttons[index].innerHTML = item.label;
+		
+	});
+
+}
+
+//cette fonction sera appelle si la saisie du joueur correspond a une connection.
+var handlePatternResponse = function(jsonData){
+	console.log("Check pattern : scene found !");
+	handleScene(jsonData);
+}
+
+//cette fonction sera appelle si la saisie du joueur NE correspond PAS a une connection.
+var handlePatternFailure = function(message, data){
+	console.log("Check pattern : no scene found.");
+	//alert("Invalid pattern");
+}
+
+//gestion de la validation du formulaire
+document.querySelector("#patternForm").addEventListener("submit", function(){
+
+	var theInput = document.querySelector("#playerInput").value;
+	console.log("Form submitted with value : " + theInput);
+	
+	//demande au serveur la scene correspondant a la saisie (en passant les fonctions "handlePatternResponse" et "handlePatternFailure")
+	jxServer.checkPattern(currentSceneId, theInput, handlePatternResponse, handlePatternFailure);	
+});
+
+//******
+//c'est ici que ca demarre : lance la requete pour la premiere scene.
+//si une scene est trouvee, il appelera la fonction "handleScene"
+//******
+jxServer.requestScene(currentSceneId, handleScene);
+
+//jxServer.listenImageCode(document.querySelector("#fileInput"), jxServer.redirectToUrl);
+
+//gestion de la validation du formulaire
+document.querySelector("#player").addEventListener("click", function(){
+	var res = confirm("Reset variables + reload ?");
+	
+	if (res) {
+		jxServer.variables.resetLocal();
+		window.location.reload();
+	}
+	
+});
+
+
+})();

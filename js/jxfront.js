@@ -18,7 +18,6 @@ JX.Server = function(){
 	this.variables = new JX.Vars();
 	this.variables.init("_jx", 1);
 
-
 	//Request scene details.
 	this.requestScene = function(sceneId, callbackSuccess, callbackError){
 		this.makeJsonRequest("api/scene/" + sceneId, callbackSuccess, callbackError);
@@ -105,6 +104,7 @@ JX.Vars = function(){
 		}
 
 		JX.log("updated variables : ", this.variables);
+		this.saveLocal();
 	}
 
 	this.add = function(name, value) {
@@ -128,4 +128,35 @@ JX.Vars = function(){
 
 		return temp.join("&");
 	}
+
+	this.saveLocal = function(){
+		for (key in this.variables) {
+			localStorage.setItem("JX_" + key, this.variables[key]);
+		}
+
+		JX.log("Saved variables.");
+	}
+
+	this.readLocal = function(){
+		for (key in this.variables) {
+			var value = localStorage.getItem("JX_" + key);
+
+			if (value != undefined) {
+				this.variables[key] = parseInt(value);
+			}
+		}
+
+		JX.log("Read variables from localStorage.");
+		JX.log("values variables : ", this.variables);
+
+	}
+
+	this.resetLocal = function(){
+		JX.log("Reset variables from localStorage.");
+
+		for (key in this.variables) {
+			localStorage.removeItem("JX_" + key);
+		}
+	}
+
 }
