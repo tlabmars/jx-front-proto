@@ -147,12 +147,10 @@ JX.Vars = function(){
 		var ignore = ["latitude", "longitude"];
 
 		for (key in this.variables) {
-			console.log(key);
+			
 			if (ignore.indexOf(key) >= 0) {
-				console.log("ignore !");
 				continue;
 			}
-			console.log("not ignore !");
 
 			localStorage.setItem("JX_" + key, this.variables[key]);
 		}
