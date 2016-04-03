@@ -8,6 +8,7 @@ h1 {
 
 #connections{
 	padding: 0;
+	overflow: auto;
 }
 
 #connections li {
