@@ -81,6 +81,14 @@ ul.header {
     align-items: center;
     list-style: none;
 }
+ul.header-right {
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-start;    
+    align-items: center;
+    list-style: none;
+
+}
 
 .img-round {
     border-radius:100%;

@@ -3,16 +3,29 @@ var currentSceneId = 9;
 
 //preparation de jxServer
 var jxServer = new JX.Server();
+var fonctionFullscreen;
 
 //initialisation des variables du jeu. 
-jxServer.variables.init("geoloc", "off");
-jxServer.variables.init("beenthere", 0);
 jxServer.variables.init("vue", 0);
 jxServer.variables.init("indiceVue", 0);
+jxServer.variables.init("geoloc", "off");
+
+var mainContainer=document.getElementById("container");
+
+
+
 
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){
+    
+    
+    if (fonctionFullscreen) {
+        
+        mainContainer.removeEventListener("click", fonctionFullscreen);
+        fonctionFullscreen = undefined;
+    
+    }
 
     console.log("handleScene receive JSON data : ");
     console.log(jsonData);
@@ -38,7 +51,7 @@ var handleScene = function(jsonData){
                 mediaElement.innerHTML += "<h1>" + item.content + "</h1>";
             }
             else{
-                mediaElement.innerHTML += "<p class='text'>" + item.content + "</p>";
+                mediaElement.innerHTML += "<p>" + item.content + "</p>";
             }
             	
         } 
@@ -56,32 +69,43 @@ var handleScene = function(jsonData){
         if (! item.label) {
             return;
         }
-                
-            if (item.position == "105") {
+        
+        if (item.position == "100")
 
-                var newConnectionElement = document.createElement("i");
-                newConnectionElement.setAttribute("class", "fa fa-chevron fa-4x");
+        {
+            
+            fonctionFullscreen = function(){
+                jxServer.requestScene(item.childSceneId, handleScene);
+            };
+            
+            mainContainer.addEventListener("click", fonctionFullscreen);
+
+        }
+              
+            else {
+                
+                if (item.position == "105") {
+
+                    var newConnectionElement = document.createElement("i");
+                    newConnectionElement.setAttribute("class", "fa fa-chevron-right fa-2x");
+                    newConnectionElement.addEventListener("click", function(){
+                    jxServer.requestScene(item.childSceneId, handleScene);
+                    });
+
+                    connectionElement.appendChild(newConnectionElement);
+                }
+                else {
+                var newConnectionElement = document.createElement("button");
+                newConnectionElement.innerHTML = item.label;
+                newConnectionElement.setAttribute("class", "pure-button pure-button-primary");
+                newConnectionElement.setAttribute("style", "margin-right:20px;");
                 newConnectionElement.addEventListener("click", function(){
                     jxServer.requestScene(item.childSceneId, handleScene);
                 });
 
                 connectionElement.appendChild(newConnectionElement);
-            }
-            else {
-            var newConnectionElement = document.createElement("button");
-            newConnectionElement.innerHTML = item.label;
-            newConnectionElement.setAttribute("class", "pure-button pure-button-primary");
-            newConnectionElement.setAttribute("style", "margin-right:20px;");
-            newConnectionElement.addEventListener("click", function(){
-                jxServer.requestScene(item.childSceneId, handleScene);
-                if (item.childSceneId == 10) {
-                    var geoloc = "on";
-                
                 }
-            });
-
-            connectionElement.appendChild(newConnectionElement);
-            }
+        }
     });
 
 }
