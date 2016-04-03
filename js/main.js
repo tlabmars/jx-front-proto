@@ -15,6 +15,10 @@ jxServer.variables.init("timer",0); //si on doit donner un indice au bout d'un c
 //tente de lire les valeurs du localstorage
 jxServer.variables.readLocal();
 
+//jxServer.variables.init("latitude", 0);
+//jxServer.variables.init("longitude", 0);
+
+//jxServer.handleLatitudeLongitude();
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){

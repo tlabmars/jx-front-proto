@@ -9,6 +9,7 @@ JX.Server = function(){
 
 	//prod conf
 	this.baseUrl = "http://jx.tlabmars.org/sandbox/prototypes/jx-writer/web/";
+	this.redirectMessage = "Etes vous sûr de vouloir aller sur ?";
 
 	//personnal dev conf
 	if (window.location.href.indexOf("jxwriter.local") != -1){
@@ -119,6 +120,19 @@ JX.Vars = function(){
 		return this.variables[name];
 	}
 
+	this.set = function(name, value) {
+		this.variables[name] = value;
+		this.saveLocal();
+	}
+
+	this.exists = function(name) {
+		if (this.variables[name] != undefined) {
+			return true;
+		}
+
+		return false;
+	}
+
 	this.toString = function(){
 		var temp = [];
 
@@ -130,7 +144,14 @@ JX.Vars = function(){
 	}
 
 	this.saveLocal = function(){
+		var ignore = ["latitude", "longitude"];
+
 		for (key in this.variables) {
+			
+			if (ignore.indexOf(key) >= 0) {
+				continue;
+			}
+
 			localStorage.setItem("JX_" + key, this.variables[key]);
 		}
 
@@ -142,7 +163,7 @@ JX.Vars = function(){
 			var value = localStorage.getItem("JX_" + key);
 
 			if (value != undefined) {
-				this.variables[key] = parseInt(value);
+				this.variables[key] = parseFloat(value);
 			}
 		}
 
