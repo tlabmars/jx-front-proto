@@ -6,9 +6,9 @@ debugger;
 var jxServer = window.jxServer = new JX.Server();
 
 //scene en cours, avec la valeur de depart.
-//var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) || 9;
+var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) || 9;
     
-    var currentSceneId = 123;
+   // var currentSceneId = 9;
 
 var fonctionFullscreen;
 
@@ -20,6 +20,8 @@ jxServer.variables.init("indiceVue", 0);
 jxServer.variables.init("lastSeenScene", 9);
     
 var mainContainer=document.getElementById("container");
+    
+    jxServer.listenImageCode(document.getElementById("playerInput"), jxServer.redirectToUrl);
 
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
@@ -79,11 +81,19 @@ var handleScene = function(jsonData){
         }
         
         if (item.format == "audio") {
-            var newVideoElement = document.createElement("iframe");
+            var newAudioElement = document.createElement("iframe");
             newAudioElement.setAttribute("src", item.content);
-            newAudioElement.setAttribute("width", "80%");
+            newAudioElement.setAttribute("width", "100%");
             newAudioElement.setAttribute("height", "auto");
             mediaElement.appendChild(newAudioElement);
+        }
+        
+        if (item.format == "slideshow") {
+            var newImgElement = document.createElement("img");
+            newImgElement.setAttribute("src", item.content);
+            newImgElement.setAttribute("width", "auto");
+            newImgElement.setAttribute("height", "400");
+            mediaElement.appendChild(newImgElement);
         }
     });
 

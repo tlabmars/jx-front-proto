@@ -1,5 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Alegreya+Sans:400,700|Alegreya:400,700);
 
+@font-face {
+    font-family: 'chocregular';
+    src: url('font/choc-webfont.eot');
+    src: url('font/choc-webfont.eot?#iefix') format('embedded-opentype'),
+        url('font/choc-webfont.woff2') format('woff2'),
+        url('font/choc-webfont.woff') format('woff'),
+        url('font/choc-webfont.ttf') format('truetype'),
+        url('font/choc-webfont.svg#chocregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body, .pure-g [class *= "pure-u"] {
     /* Set your content font stack here: */
     font-family: 'Alegreya Sans', sans-serif;
@@ -11,7 +24,7 @@ body, .pure-g [class *= "pure-u"] {
 
 }
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Alegreya', serif;
+    font-family: 'chocregular', sans-serif;
     text-transform: uppercase;
     color:#00ADDA;
 }
@@ -96,6 +109,10 @@ ul.header-right {
     border-radius:100%;
     height:auto;
     margin-right:15px;
+}
+
+iframe {
+    border: 0;
 }
 
 #fileFormLabel {
