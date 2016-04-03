@@ -1,5 +1,9 @@
+(function() {
+
+debugger;
+
 //scene en cours, avec la valeur de depart.
-var currentSceneId = 9;
+var currentSceneId = jxServer.variables.get("lastSeenScene") || 9;
 
 //preparation de jxServer
 var jxServer = new JX.Server();
@@ -9,6 +13,7 @@ jxServer.variables.init("geoloc", "off");
 jxServer.variables.init("beenthere", 0);
 jxServer.variables.init("vue", 0);
 jxServer.variables.init("indiceVue", 0);
+jxServer.variables.init("lastSeenScene", 9);
 
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
@@ -18,6 +23,8 @@ var handleScene = function(jsonData){
     console.log(jsonData);
 
     currentSceneId = jsonData.id;
+    debugger;
+    jxServer.variables.update("lastSeenScene", jsonData.id);
 
     //pointe vers les elements HTML
     var mediaElement = document.getElementById("medias");
@@ -113,3 +120,4 @@ document.querySelector("form").addEventListener("submit", function(){
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
 jxServer.requestScene(currentSceneId, handleScene);
+})();
