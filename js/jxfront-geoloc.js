@@ -43,7 +43,7 @@ JX.Server.prototype.handleLatitudeLongitude = function(callbackReady, callbackNo
 }
 
 JX.Server.prototype.disableLatitudeLongitude = function(){
-	if (! this.watchPositionId) {
+	if (this.watchPositionId == undefined) {
 		return;
 	}
 
