@@ -13,8 +13,8 @@ h1 {
 #connections li {
 	list-style: none;
 
-	padding: 1em;
-	margin: 1em;
+	padding: 2%;
+	margin: 2%;
 
 	text-align: center;
 	cursor: pointer; 
@@ -27,3 +27,9 @@ h1 {
 	width: 100%;
 }
 
+.qcm #connections li {
+	float:none;
+	width: 92%;
+	
+	background: #dedede;
+}
