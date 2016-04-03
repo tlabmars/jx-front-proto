@@ -12,7 +12,6 @@ html, body {
 body {
 
     background-color: black;
-    
 }
 
 *{
@@ -20,7 +19,7 @@ body {
     padding: 0px;
     border: none;
     box-sizing: border-box;
-    color: white;
+    color: #666;
 }
 
 
@@ -41,14 +40,14 @@ body {
 	z-index: -1;
 }
 .mainContainer {
-    background: lightgrey;
+    background-color: #EEE;
     min-width: 100vw;
     min-height: 100vh;
     margin: 0px;
     position: absolute;
     overflow: auto;
     text-align: center;
-    border: 2vh solid white;
+/*    border: 2vh solid #9DCC92;*/
     
 
 }
@@ -57,7 +56,7 @@ body {
     display: inline-block;
     border: 2px solid white;
 /*    border-radius: 2px;*/
-    padding: 20px;
+    padding: 24px;
 }
 
 h1 {
@@ -75,25 +74,47 @@ ul {
 li{
     color: white;
 /*    background: white;*/
-    border: 2px solid white;
-/*    border-radius: 2px;*/
-    padding: 1vw;
-    margin-bottom: 2vw;
+/*    border: 2px solid white;*/
+    border-radius: 10px;
+    padding: 10px 20px;
     display: inline-block;
-    margin: auto;
-    
+    margin: 12px auto;
+    cursor: pointer;
+    background: #8BAD20;
 }
 
 input{
-    color: black;
+    color: #666;
+    padding: 10px 20px; 
+    border-radius: 10px 0px 0px 10px;
+    margin-right: 0px;
+    font-size: 14px;
+    font-family: bitter;
+    
+}
+
+input[type=submit]{
+    border-radius:0px 10px 10px 0px;
+    margin-left: -1em;
+    background:#8BAD20;
+    color: white;
+    font-family: bitter;
+    font-size: 14px;
+    
+
 }
 #medias {
     width: 60%;
-    margin:  10vw auto;
+    margin:  24px  auto;
 }
 
 img{
-    background-color: white;
+/*    background-color: white;*/
     width: 100%;
-    margin: 2vh auto;
+    margin: 12px auto;
+}
+
+p{
+    text-align: left;
+/*    background: red;*/
 }

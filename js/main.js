@@ -1,6 +1,6 @@
 
 //scene en cours, avec la valeur de depart.
-var currentSceneId = 19;
+var currentSceneId = 57;
 
 //preparation de jxServer
 var jxServer = new JX.Server();
@@ -9,6 +9,8 @@ var jxServer = new JX.Server();
 jxServer.variables.init("inspiration", 0);
 
 jxServer.variables.init("timer",0); //si on doit donner un indice au bout d'un certain temps (on l'utilisera certainement pour la géoloc, penser à faire un arrondi en secondes)
+//jxServer.variables.init("day",0);
+//jxServer.variables.init("geolocalisation",0);
 
 //tente de lire les valeurs du localstorage
 jxServer.variables.readLocal();
@@ -19,7 +21,10 @@ var handleScene = function(jsonData){
 	
 	console.log("handleScene receive JSON data : ");
 	console.log(jsonData);
-	
+    
+    var showPatternForm = false;
+    
+    
 	currentSceneId = jsonData.id;
 
 	//pointe vers les elements HTML
@@ -28,25 +33,29 @@ var handleScene = function(jsonData){
 	var connectionElement = document.getElementById("connections");
 	var playerElement = document.getElementById("player");
 	var inputElement = document.getElementById("playerInput");
+//    var patternForm = document.getElementById("patternForm");
+       
+    
 	
 	//reset elements
-	titleElement.innerHTML = "";
+	//titleElement.innerHTML = "";
 	mediaElement.innerHTML = "";
 	connectionElement.innerHTML = "";
 	playerElement.innerHTML = "";
 	inputElement.value="";
-	
+	$(".mainContainer").css("background","#EEE");
+    //TODO: du coup, éventuellement bouger et modifier ça 
 	//prise en compte des actions (mise a jour des variables de la scène, s'il y en a)
 	jxServer.variables.update(jsonData.actions);
 
 
 	//affichage
-	playerElement.innerHTML = "Votre score d'inspiration : " + jxServer.variables.get("inspiration");
+//	playerElement.innerHTML = "Votre score d'inspiration : " + jxServer.variables.get("inspiration");
 
 	//titre de la page
-	titleElement.innerHTML = "Scène #" + jsonData.id ;
-	titleElement.innerHTML += " : " + jsonData.title ;
-	titleElement.innerHTML += " (" + jsonData.project.title + ")";
+	//titleElement.innerHTML = "Scène #" + jsonData.id ;
+	//titleElement.innerHTML += " : " + jsonData.title ;
+	//titleElement.innerHTML += " (" + //jsonData.project.title + ")";
 	
 	jsonData.medias.forEach(function(item){
 		if (item.format == "text") {
@@ -58,9 +67,26 @@ var handleScene = function(jsonData){
 			newImageElement.setAttribute("src", item.content);
 			mediaElement.appendChild(newImageElement);
 		}
+        
+        
+        
+        if (item.format == "img_bg") {
+//            alert(item.content);
+           $(".mainContainer").css("background-color","rgb(238, 238, 238)"); $(".mainContainer").css("background-image","url("+item.content+")");
+            $(".mainContainer").css("background-position","center center");
+            $(".mainContainer").css("background-repeat","no-repeat");
+            $(".mainContainer").css("background-size", "cover");
+            /*TODO : Mettre tout ça dans un style et basculer le style (sauf le lien vers l'image, forcément) */
+        }
 	});
 
 	jsonData.connections.forEach(function(item){
+        if(item.pattern){
+            showPatternForm = true;
+        }
+        
+    
+        
 		if (! item.label) {
 			return;
 		}
@@ -75,6 +101,13 @@ var handleScene = function(jsonData){
 
 		connectionElement.appendChild(newConnectionElement);
 	});
+    
+    
+    if (showPatternForm){
+        $("#patternForm").show();
+    } else {
+        $("#patternForm").hide();
+    }
 
 }
 
@@ -105,7 +138,7 @@ document.querySelector("#patternForm").addEventListener("submit", function(){
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
 jxServer.requestScene(currentSceneId, handleScene);
-jxServer.listenImageCode(document.querySelector("#fileInput"), jxServer.redirectToUrl);
+//jxServer.listenImageCode(document.querySelector("#fileInput"), jxServer.redirectToUrl);
 
 //gestion de la validation du formulaire
 document.querySelector("#player").addEventListener("click", function(){
@@ -117,4 +150,5 @@ document.querySelector("#player").addEventListener("click", function(){
 	}
 	
 });
+
 
