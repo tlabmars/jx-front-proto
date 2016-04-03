@@ -13,12 +13,13 @@ var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) ||
 var fonctionFullscreen;
 
 //initialisation des variables du jeu. 
-jxServer.variables.init("geoloc", "off");
 jxServer.variables.init("beenthere", 0);
 jxServer.variables.init("vue", 0);
 jxServer.variables.init("indiceVue", 0);
 jxServer.variables.init("lastSeenScene", 9);
-    
+
+document.getElementById("qrcode-form").style.display = "none";
+document.getElementById("pattern-form").style.display = "none";
 var mainContainer=document.getElementById("container");
     
     jxServer.listenImageCode(document.getElementById("playerInput"), jxServer.redirectToUrl);
@@ -33,6 +34,11 @@ var handleScene = function(jsonData){
         fonctionFullscreen = undefined;
 
     }
+
+        if (jsonData.data == "qrcode"){
+            document.getElementById("qrcode-form").style.display = "block";
+
+        }
 
     console.log("handleScene receive JSON data : ");
     console.log(jsonData);
@@ -107,7 +113,16 @@ var handleScene = function(jsonData){
         {
 
             fonctionFullscreen = function(){
+                
+                if (fonctionFullscreen) {
+
+                    mainContainer.removeEventListener("click", fonctionFullscreen);
+                    fonctionFullscreen = undefined;
+
+                }
+                
                 jxServer.requestScene(item.childSceneId, handleScene);
+                
             };
 
             mainContainer.addEventListener("click", fonctionFullscreen);
@@ -188,14 +203,14 @@ var handlePatternFailure = function(message, data){
 }
 
 //gestion de la validation du formulaire
-document.querySelector("form").addEventListener("submit", function(){
+//document.querySelector("pattern-form").addEventListener("submit", function(){
 
-    var theInput = document.querySelector("#playerInput").value;
-    console.log("Form submitted with value : " + theInput);
+   // var theInput = document.querySelector("#playerInput").value;
+    //console.log("Form submitted with value : " + theInput);
 
     //demande au serveur la scene correspondant a la saisie (en passant les fonctions "handlePatternResponse" et "handlePatternFailure")
-    jxServer.checkPattern(currentSceneId, theInput, handlePatternResponse, handlePatternFailure);	
-});
+    //jxServer.checkPattern(currentSceneId, theInput, handlePatternResponse, handlePatternFailure);	
+//});
 
 //******
 //c'est ici que ca demarre : lance la requete pour la premiere scene.

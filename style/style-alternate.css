@@ -52,8 +52,8 @@ body > div {
 }
 #medias {
     min-height: 50%;
-    margin-right: 15%;
-    margin-left: 15%;
+    margin-right: 10%;
+    margin-left: 10%;
 
 }
 
@@ -68,7 +68,7 @@ body > div {
 #connections {
     padding:15px;
     text-align: center;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: calc(100% - 30px);
 }
@@ -76,8 +76,6 @@ body > div {
 text-align: center;
 }
 #medias > p {
-    margin-left:20%;
-    margin-right: 20%;
     padding:20px;
 
 }
