@@ -13,7 +13,7 @@ body, .pure-g [class *= "pure-u"] {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Alegreya', serif;
     text-transform: uppercase;
-    color:#83D6DE;
+    color:#00ADDA;
 }
 
 a {
@@ -43,6 +43,8 @@ body > div > div {
 }
 #medias {
     min-height: 50%;
+    margin-right: 15%;
+    margin-left: 15%;
 
 }
 
@@ -71,7 +73,7 @@ text-align: center;
 
 }
 .pure-button-primary {
-    background: #83D6DE; /* this is a blue */
+    background: #00ADDA; /* this is a blue */
     color: whitesmoke;
 }
 ul.header {
@@ -81,28 +83,19 @@ ul.header {
     align-items: center;
     list-style: none;
 }
+
 ul.header-right {
     display:flex;
     flex-direction:row;
-    justify-content: flex-start;    
+    justify-content: flex-start;
     align-items: center;
     list-style: none;
-
 }
 
 .img-round {
     border-radius:100%;
     height:auto;
-}
-
-hr {
-    margin: 20px 0 5px 0;
-}
-
-hr.separator-one {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(131, 214, 222, 0.75), rgba(0, 0, 0, 0));
+    margin-right:15px;
 }
 
 #fileFormLabel {
