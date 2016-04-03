@@ -5,7 +5,7 @@
 var jxServer = window.jxServer = new JX.Server();
 
 //scene en cours, avec la valeur de depart.
-var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) || 9;
+var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) || 11;
     //alert(window.location.hash);
    // var currentSceneId = 9;
     if (window.location.hash){
@@ -175,6 +175,22 @@ var handleScene = function(jsonData){
 
                     }
                     else {
+                        
+                        if (item.label == "skip") {
+
+                            var newConnectionElement = document.createElement("p");
+                            newConnectionElement.setAttribute("style", "text-decoration:underline; color:#00ADDA;");
+                            newConnectionElement.innerHTML += "Passer l'introduction";
+                            newConnectionElement.addEventListener("click", function(){
+                                jxServer.requestScene(item.childSceneId, handleScene);
+                            });
+
+                            connectionElement.appendChild(newConnectionElement);
+
+                        }
+                        
+                        else {
+                        
                         var newConnectionElement = document.createElement("button");
                         newConnectionElement.innerHTML = item.label;
                         newConnectionElement.setAttribute("class", "pure-button pure-button-primary");
@@ -184,6 +200,7 @@ var handleScene = function(jsonData){
                         });
 
                         connectionElement.appendChild(newConnectionElement);
+                        }
                     }
                     
                 }
