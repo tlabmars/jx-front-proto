@@ -34,3 +34,12 @@ h1 {
 	
 	background: #dedede;
 }
+
+
+.portrait #connections li {
+	float:left;
+	width: 50%;
+	margin: 0%;
+
+	background: #dedede;
+}
