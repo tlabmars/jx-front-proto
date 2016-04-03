@@ -1,6 +1,6 @@
 
 //scene en cours, avec la valeur de depart.
-var currentSceneId = 111;//26;
+var currentSceneId = 26;
 
 //preparation de jxServer
 var jxServer = new JX.Server();
