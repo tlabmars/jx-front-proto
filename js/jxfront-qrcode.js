@@ -1,14 +1,24 @@
 
-JX.Server.prototype.redirectToUrl = function(url) {
-	confirm("Redirect to " + url + " ?");
-	document.location.href = url;
+JX.Server.prototype.redirectToUrl = function(url, jx) {
+	var res = true;
+
+	if (jx.redirectMessage) {		
+		res = confirm( jx.redirectMessage.replace("%url%", url) );	
+	}
+
+	if (res) {
+		document.location.href = url;	
+	}
+	
 };
 
-JX.Server.prototype.handlePattern = function(data) {
+JX.Server.prototype.handlePattern = function(data, jx) {
 	
 };
 
 JX.Server.prototype.listenImageCode = function(inputElement, callbackSuccess, callbackFailure){
+
+	var jx = this;
 
 	if (! callbackSuccess) {
 		callbackSuccess = function(){};
@@ -22,9 +32,9 @@ JX.Server.prototype.listenImageCode = function(inputElement, callbackSuccess, ca
 		JX.log("Decoded data : ", data);
 
 		if (data) {
-			callbackSuccess(data);
+			callbackSuccess(data, jx);
 		} else {
-			callbackFailure();
+			callbackFailure(jx);
 		}
 	};
 
