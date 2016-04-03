@@ -6,8 +6,6 @@ var jxServer = window.jxServer = new JX.Server();
 //scene en cours, avec la valeur de depart.
 var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) || 79;
 
-debugger;
-
 var fonctionFullscreen;
 
 //initialisation des variables du jeu. 
