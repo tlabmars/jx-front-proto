@@ -1,14 +1,17 @@
 (function() {
 
-debugger;
     
 //preparation de jxServer
 var jxServer = window.jxServer = new JX.Server();
 
 //scene en cours, avec la valeur de depart.
 var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) || 9;
-    
+    //alert(window.location.hash);
    // var currentSceneId = 9;
+    if (window.location.hash){
+        var id = window.location.hash.substr(1);
+        currentSceneId = id;
+    }
 
 var fonctionFullscreen;
 
