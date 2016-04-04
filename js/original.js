@@ -1,11 +1,10 @@
 (function() {
-
-    
+   
 //preparation de jxServer
 var jxServer = window.jxServer = new JX.Server();
 
 //scene en cours, avec la valeur de depart.
-var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) || 11;
+var currentSceneId = parseInt(sessionStorage.getItem('JX_lastSeenScene'), 10) || 9;
     //alert(window.location.hash);
    // var currentSceneId = 9;
     if (window.location.hash){
@@ -21,11 +20,15 @@ jxServer.variables.init("vue", 0);
 jxServer.variables.init("indiceVue", 0);
 jxServer.variables.init("lastSeenScene", 9);
 
+//par défaut le formulaire pour upload de la photo du QR code est masqué
 document.getElementById("qrcode-form").style.display = "none";
 document.getElementById("pattern-form").style.display = "none";
+    
 var mainContainer=document.getElementById("container");
     
-    jxServer.listenImageCode(document.getElementById("playerInput"), jxServer.redirectToUrl);
+// si scan QR code, redirection vers URL
+    
+jxServer.listenImageCode(document.getElementById("playerInput"), jxServer.redirectToUrl);
 
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
@@ -61,12 +64,16 @@ var handleScene = function(jsonData){
 
     //prise en compte des actions (mise a jour des variables de la scène, s'il y en a)
     jxServer.variables.update(jsonData.actions);
-
+    
+    
+    //intégration des médias associés à la scène
     jsonData.medias.forEach(function(item){
         if (item.format == "text") {
+            // Titres
             if (item.position == "1") {
                 mediaElement.innerHTML += "<h1>" + item.content + "</h1>";
             }
+            // Texte simple
             else{
                 mediaElement.innerHTML += "<p class='text'>" + item.content + "</p>";
             }
@@ -111,9 +118,7 @@ var handleScene = function(jsonData){
             return;
         }
                 
-        if (item.position == "100")
-
-        {
+        if (item.position == "100"){
 
             fonctionFullscreen = function(){
                 
@@ -133,40 +138,40 @@ var handleScene = function(jsonData){
         }
 
         else {
-
-            if (item.position == "105") {
+              
+            if (item.label == "next") {
 
                 var newConnectionElement = document.createElement("i");
-                newConnectionElement.setAttribute("class", "fa fa-circle fa-4x");
+                newConnectionElement.setAttribute("class", "fa fa-chevron-right fa-2x");
                 newConnectionElement.addEventListener("click", function(){
-                    newConnectionElement.setAttribute("class", "active");
                     jxServer.requestScene(item.childSceneId, handleScene);
                 });
 
                 connectionElement.appendChild(newConnectionElement);
-            }
+
             else {
-                
-                if (item.label == "next") {
-                    
-                    var newConnectionElement = document.createElement("i");
-                    newConnectionElement.setAttribute("class", "fa fa-chevron-right fa-2x");
+
+
+                if (item.position == "200") {
+
+                    var newConnectionElement = document.createElement("img");
+                    newConnectionElement.setAttribute("src", item.label);                                                  
+                    newConnectionElement.setAttribute("class", "img-round");
                     newConnectionElement.addEventListener("click", function(){
                         jxServer.requestScene(item.childSceneId, handleScene);
                     });
 
                     connectionElement.appendChild(newConnectionElement);
-                
+
                 }
                 
                 else {
-                    
-                    
-                    if (item.position == "200") {
 
-                        var newConnectionElement = document.createElement("img");
-                        newConnectionElement.setAttribute("src", item.label);                                                  
-                        newConnectionElement.setAttribute("class", "img-round");
+                    if (item.label == "skip") {
+
+                        var newConnectionElement = document.createElement("p");
+                        newConnectionElement.setAttribute("style", "text-decoration:underline; color:#00ADDA;");
+                        newConnectionElement.innerHTML += "Passer l'introduction";
                         newConnectionElement.addEventListener("click", function(){
                             jxServer.requestScene(item.childSceneId, handleScene);
                         });
@@ -174,37 +179,23 @@ var handleScene = function(jsonData){
                         connectionElement.appendChild(newConnectionElement);
 
                     }
+
                     else {
-                        
-                        if (item.label == "skip") {
 
-                            var newConnectionElement = document.createElement("p");
-                            newConnectionElement.setAttribute("style", "text-decoration:underline; color:#00ADDA;");
-                            newConnectionElement.innerHTML += "Passer l'introduction";
-                            newConnectionElement.addEventListener("click", function(){
-                                jxServer.requestScene(item.childSceneId, handleScene);
-                            });
+                    var newConnectionElement = document.createElement("button");
+                    newConnectionElement.innerHTML = item.label;
+                    newConnectionElement.setAttribute("class", "pure-button pure-button-primary");
+                    newConnectionElement.setAttribute("style", "margin-right:20px;");
+                    newConnectionElement.addEventListener("click", function(){
+                        jxServer.requestScene(item.childSceneId, handleScene);
+                    });
 
-                            connectionElement.appendChild(newConnectionElement);
-
-                        }
-                        
-                        else {
-                        
-                        var newConnectionElement = document.createElement("button");
-                        newConnectionElement.innerHTML = item.label;
-                        newConnectionElement.setAttribute("class", "pure-button pure-button-primary");
-                        newConnectionElement.setAttribute("style", "margin-right:20px;");
-                        newConnectionElement.addEventListener("click", function(){
-                            jxServer.requestScene(item.childSceneId, handleScene);
-                        });
-
-                        connectionElement.appendChild(newConnectionElement);
-                        }
+                    connectionElement.appendChild(newConnectionElement);
                     }
-                    
                 }
+                    
             }
+        }
         }
     });
 
@@ -222,7 +213,7 @@ var handlePatternFailure = function(message, data){
     //alert("Invalid pattern");
 }
 
-//gestion de la validation du formulaire
+//gestion de la validation du formulaire (KO)
 //document.querySelector("pattern-form").addEventListener("submit", function(){
 
    // var theInput = document.querySelector("#playerInput").value;
