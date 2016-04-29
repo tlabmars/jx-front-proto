@@ -1,0 +1,223 @@
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>JOLIETTE MEMORIES - JOLIETTE CONNEXIONS</title>
+  
+        <link rel="stylesheet" href="css/flexslider.css" type="text/css">
+        <link rel="stylesheet" href="css/main.min.css" type="text/css">
+        <!-- <link rel="stylesheet" href="css/style.css" type="text/css"> -->
+        <!-- <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet" type="text/css"> -->
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900|Karla:400,700,400italic" rel="stylesheet" type="text/css">             
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script src="js/jquery.flexslider-min.js"></script>
+        <script src="js/jquery.fitvids.js"></script>
+        
+        <style>
+            body {
+                background-color: blue;
+                color:blue;
+                font-family: 'Playfair Display', serif;
+                font-size:18px;
+                line-height:1.6;
+                padding:2.5%;
+            }
+            
+            h1, h2, h3, h4, h5, h6 {
+                font-family:'Karla', 'Helvetica Neue', Helvetica, sans serif;
+                text-transform: uppercase;
+                font-weight: 700;
+            
+            }
+            /* OVERLAY STYLING */
+            .overlay {
+                /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+                height: 100%;
+                width: 0;
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                background-color:blue; /* Black fallback color */
+                /* background-color: rgba(0,0,0, 0.9);  Black w/opacity */
+                overflow-x: hidden; /* Disable horizontal scroll */
+                transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+            }
+            .overlay-content {
+                position: relative;
+                top: 25%; /* 25% from the top */
+                width: 100%; /* 100% width */
+                text-align: center; /* Centered text/links */
+                margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+            }
+            
+            .overlay-content h1 {
+            
+                color:white;
+            }
+
+            .closebtn {
+                position: absolute;
+                top: 20px;
+                right: 45px;
+                font-size: 60px !important; /* Override the font-size specified earlier (36px) for all navigation links */
+                color:white;
+            }
+            .closebtn:hover {
+                text-decoration:none;
+            
+            }
+
+            .openbtn {
+                position: fixed;
+                top: 8%;
+                left: 5%;
+                font-size: 1.5rem;
+                font-weight:700;
+                cursor:pointer;
+                color:black;
+                /*-webkit-transform: rotate(-90deg);*/
+
+            }
+            #header {
+                margin: 3rem 0;
+             
+            }
+            
+            #connexions {
+                margin-top: 3rem;
+            
+            }
+            .container {
+                height:100%;
+                text-align: center;
+                width: 100%;
+                background-color: white;
+            
+            }
+            .active {
+            
+                cursor:pointer;
+            }
+            .btn {
+                background-color:blue;
+                font-family:'Karla', 'Helvetica Neue', Helvetica, sans serif;
+                text-transform:uppercase;
+            }
+            .btn:hover{
+                background-color:black;
+            }
+            
+            img {
+                -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
+                filter: grayscale(100%);
+            }
+            .img-color {
+                /* border-radius:100%;
+                height:auto;*/
+                margin-right:15px;
+                filter: none;
+                -webkit-filter:none;
+            }
+        
+        </style>
+    </head>
+    <body>
+        <div id="credits" class="overlay">
+
+            <!-- Button to close the overlay navigation -->
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+            <!-- Overlay content -->
+            <div class="overlay-content">
+                <h1>Je te vois</h1>
+                <p id="data" style="color:white;"></p>
+            </div>
+
+        </div>
+        <div id="container" class="container">
+
+            <!-- Header -->
+            <div id="header" class="row">
+                <div class="grid-half float-center">
+                    <span onclick="openNav()" class="openbtn">i</span>
+                    <div id="headerImage"></div>
+                    <div id="headerTitle"></div>
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div id="content" class="row">
+                <div class="grid-half float-center">
+                   
+                    <!-- Media containers -->
+                    <div id="text"></div>
+                    <div id="image"></div>
+                    <div id="flexslider" class="flexslider">
+                        <ul id="slideshow" class="slides"></ul>
+                    </div> 
+                    <div id="video" class="video-container"></div>
+                    <audio id="audio" class="audio-container" autoplay="autoplay" loop="loop"></audio>
+                    
+                    <!-- QR and Pattern Forms -->
+                    <form id="qrForm" style="display:none;">
+                        <label for="qrInput">Scanner le QR Code</label>
+                        <input name="qrInput" id="qrInput" type="file">
+                    </form>
+                    <form id="patternForm" style="display:none;">
+                        <input name="patternInput" id="patternInput" type="text" placeholder="À toi !">
+                        <input name="patternSubmit" id="patternSubmit" type="submit" class="btn btn-large"/>
+                    </form>                   
+                </div>
+            </div>
+            <!-- Footer (connexions) -->
+            <div class="row">
+                <div id="connexions" class="grid-half float-center"></div>
+            </div>
+
+        </div>
+        
+        <!-- Scripts and JS -->
+        
+        <script type="text/javascript" src="js/jsqrcode/grid.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/version.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/detector.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/formatinf.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/errorlevel.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/bitmat.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/datablock.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/bmparser.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/datamask.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/rsdecoder.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/gf256poly.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/gf256.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/decoder.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/qrcode.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/findpat.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/alignpat.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/databr.js"></script>
+        <script src="js/jxfront.js"></script>
+        <script src="js/jxfront-qrcode.js"></script>
+        <script src="js/jxfront-geoloc.js"></script>
+        <script src="js/app.js"></script>
+        
+        <script>
+
+            $(document).ready(function(){
+                // Target your .container, .wrapper, .post, etc.
+                $("#video-container").fitVids();
+
+            });
+
+            function openNav() {
+                document.getElementById("credits").style.width = "100%";
+            }
+
+            /* Close when someone clicks on the "x" symbol inside the overlay */
+            function closeNav() {
+                document.getElementById("credits").style.width = "0%";
+            }
+
+        </script>
+    </body>

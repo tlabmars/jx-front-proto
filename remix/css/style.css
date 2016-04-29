@@ -1,0 +1,148 @@
+body, html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    font-family: 'Inconsolata';
+    font-size:18px;
+}
+body {
+    background-color:#000;
+    color:#4eff13;     
+}
+
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+    height: 100%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+.overlay-content {
+    position: relative;
+    top: 25%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+.closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px !important; /* Override the font-size specified earlier (36px) for all navigation links */
+}
+
+
+.openbtn {
+    position: fixed;
+    top: 1%;
+    left: 3%;
+    font-size: 1.5rem;
+    color: #4eff13;
+    cursor:pointer;
+
+}
+
+.openbtn:hover {
+
+    color: #red;
+
+}
+
+.pure-g {
+    width: 100%;
+    /*padding: 0 7%;*/
+    display: table;
+    margin: 0;
+    max-width: 100%;
+    height: 100vh;
+    text-align:center;          
+}
+
+#main {
+    display: table-row;
+    text-align: center;
+    vertical-align: middle;
+    /*height:100%;*/
+    padding:2rem;
+}
+
+#connexions {
+    /*position:fixed;
+    bottom: 0;
+    left:0;*/
+    display: table-row;
+    text-align: center;
+    vertical-align: middle;
+    width:100%;
+   /* height:auto;*/
+    padding-top:0.5rem;
+    padding-bottom:2rem;
+    /*background-color: white;
+    z-index=10;*/
+}
+
+.flexslider {
+    min-width:40%;
+    max-width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    border: none;
+    /*display:none;*/
+}
+
+#video-container {
+
+    max-width: 100%;
+    height: auto;
+}
+
+iframe, embed, object {
+    max-width: 100%;
+}
+
+
+a {
+    text-decoration: none;
+    color: #white;
+
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 1rem;
+}
+
+i{
+    font-style: normal;
+}
+
+
+.pure-button-primary {
+    background-color: #4eff13 !important;
+    color: #000 !important;
+}
+
+i, .pure-button {
+    font-family: 'Inconsolata';
+}
+
+.pure-img {
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+p.XXL{
+
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.active {
+    cursor:pointer;
+}
