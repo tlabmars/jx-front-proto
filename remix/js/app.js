@@ -362,12 +362,8 @@ var handleScene = function(jsonData){
             }
             
         }
-    });
-    
-    //Cette fonction met à jour le localstorage lorsqu'une connexion de type icône (position 200) est activée
-    
-    
-    
+    });    
+        
     //Cette fonction initialise le slideshow Flexslider
 
     jQuery('.flexslider').flexslider({

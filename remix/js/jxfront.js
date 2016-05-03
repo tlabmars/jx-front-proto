@@ -8,12 +8,12 @@ JX.log = function(message, object){
 JX.Server = function(){
 
 	//prod conf
-	this.baseUrl = "http://jx.tlabmars.org/sandbox/prototypes/jx-writer/web/";
+	this.baseUrl = "https://jx.tlabmars.org/sandbox/prototypes/jx-writer/web/";
 	this.redirectMessage = "Etes vous sûr de vouloir aller sur ?";
 
 	//personnal dev conf
 	if (window.location.href.indexOf("jxwriter.local") != -1){
-		this.baseUrl = "http://jxwriter.local/app_dev.php/";
+		this.baseUrl = "https://jxwriter.local/app_dev.php/";
 	}
 
 	this.variables = new JX.Vars();

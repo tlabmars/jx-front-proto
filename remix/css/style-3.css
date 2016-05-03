@@ -17,7 +17,7 @@ body {
     font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
     font-size:18px;
     line-height:1.6;
-    padding:2.5%;
+    /*padding:2.5%;*/
     color:dimgrey;
 }
 
@@ -47,7 +47,7 @@ a:hover {
     padding-bottom:5%;
     text-align: center;               
     background-color: whitesmoke;
-    /* background: url("http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/concrete_seamless.png");*/
+    background: url("../images/concrete_seamless.png");
 
 
 }
@@ -68,6 +68,7 @@ a:hover {
     order:2;
     flex-grow:1;
     margin-top: 3rem;
+    z-index: 50;
 
 }
 
@@ -213,7 +214,7 @@ input {
 
         width:50%
     }
-    .flex-viewport {
+    .flex-viewport,  .flexslider > img  {
         max-width:350px;
         max-height: auto;
     }
