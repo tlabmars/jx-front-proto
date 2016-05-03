@@ -1,24 +1,38 @@
+@font-face {
+    font-family: 'chocregular';
+    src: url('fonts/choc-webfont.eot');
+    src: url('fonts/choc-webfont.eot?#iefix') format('embedded-opentype'),
+        url('fonts/choc-webfont.woff2') format('woff2'),
+        url('fonts/choc-webfont.woff') format('woff'),
+        url('fonts/choc-webfont.ttf') format('truetype'),
+        url('fonts/choc-webfont.svg#chocregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 
 body {
-    background-color: blue;
-    color:blue;
-    font-family: 'Playfair Display', serif;
+    background-color: #00ADDA;
+    font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
     font-size:18px;
     line-height:1.6;
     padding:2.5%;
+    color:dimgrey;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family:'Karla', 'Helvetica Neue', Helvetica, sans serif;
+    font-family:'chocregular', 'Helvetica Neue', Helvetica, sans serif;
     text-transform: uppercase;
     font-weight: 700;
+    color:#00ADDA;
 
 }
 a {
-    color:blue;
+    color:#00ADDA;
 }
 a:hover {
-    color:cyan;
+    color:midnightblue;
 }
 
 /* FLEXBOX LAYOUT */
@@ -32,10 +46,9 @@ a:hover {
     width: 100%;
     padding-bottom:5%;
     text-align: center;               
-    background-color: white;
-    background-image:url(../img/wave.png);
-    background-position:35% 10%;
-    background-repeat:no-repeat;
+    background-color: whitesmoke;
+    /* background: url("http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/concrete_seamless.png");*/
+
 
 }
 
@@ -68,7 +81,7 @@ a:hover {
     z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
-    background-color:blue; /* Black fallback color */
+    background-color:#00ADDA; /* Black fallback color */
     /* background-color: rgba(0,0,0, 0.9);  Black w/opacity */
     overflow-x: hidden; /* Disable horizontal scroll */
     transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
@@ -85,9 +98,9 @@ a:hover {
 }
 
 /* .overlay-container (
-    width:80%;
-    margin-left:auto;
-    margin-right:auto;
+width:80%;
+margin-left:auto;
+margin-right:auto;
 }*/
 
 .overlay-content h1, .overlay-content > p {
@@ -114,7 +127,7 @@ a:hover {
     font-size: 2rem;
     font-weight:700;
     cursor:pointer;
-    color:blue;
+    color:#00ADDA;
     /*-webkit-transform: rotate(-90deg);*/
 
 }
@@ -126,9 +139,9 @@ a:hover {
     cursor:pointer;
 }
 .btn {
-    background-color:blue;
-    border: 1px solid blue;
-    font-family:'Karla', 'Helvetica Neue', Helvetica, sans serif;
+    background-color:#00ADDA;
+    border: 1px solid #00ADDA;
+    font-family:'Helvetica Neue', Helvetica, sans serif;
     text-transform:uppercase;
     color:white;
 }
@@ -203,4 +216,4 @@ input {
     .flex-viewport {
         max-width:350px;
         max-height: auto;
-}
+    }

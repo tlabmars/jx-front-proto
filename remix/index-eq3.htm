@@ -1,0 +1,120 @@
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>LE RÉVEIL DE LA JOLIETTE - JOLIETTE CONNEXIONS</title>
+  
+        <link rel="stylesheet" href="css/flexslider.css" type="text/css">
+        <link rel="stylesheet" href="css/main.min.css" type="text/css">
+        <link rel="stylesheet" href="css/style-3.css" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900|Karla:400,700,400italic" rel="stylesheet" type="text/css">             
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script src="js/jquery.flexslider-min.js"></script>
+        <script src="js/jquery.fitvids.js"></script>
+
+    </head>
+    <body>
+        <div id="credits" class="overlay">
+
+            <!-- Button to close the overlay navigation -->
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+            <!-- Overlay content -->
+            <div class="overlay-content">          
+                <p>une expérience créé dans le cadre de</p>
+                <h1 style="margin-top:-1.5rem; margin-bottom:-1rem;">Joliette conneXions</h1>
+                <hr style="width:33%; margin-left:auto; margin-right:auto;">
+                <p style="font-family:'Helvetica neue', Helvetica, Arial, sans-serif; margin-top:2rem;">Par Dora, Victor, Nicolas, Camille, Maxime avec le concours de Ben et Annabel.</p>
+                <hr style="width:33%; margin-left:auto; margin-right:auto;">
+                <p style="font-family:'Helvetica neue', Helvetica, Arial, sans-serif; font-size:80%; font-style: italic; margin-top:2rem;">
+                    Un atelier d'écriture interactive proposé par <br />Storycode Provence by tlabmars et Tabasco Vidéo<br /> avec le soutien de la région PACA.<br />
+                    <a href="http://jolietteconnexions.com" title="Joliette conneXioons, le site" target="_blank" style="color:cyan;">jolietteconnexions.com</a>
+                </p>
+            </div>
+
+        </div>
+        <div id="container" class="container">
+
+            <!-- Header -->
+            <div id="header">
+                <span id="openBtn" onclick="openNav()" class="openbtn">+</span>
+                <div id="headerImage"></div>
+                <div id="headerTitle"></div>
+            </div>
+            
+            <!-- Content -->
+            <div id="content" class="content">             
+                <!-- Media containers -->
+                <div id="text"></div>
+                <div id="image"></div>
+                <div id="flexslider" class="flexslider">
+                    <ul id="slideshow" class="slides"></ul>
+                </div> 
+                <div id="video" class="video-container"></div>
+                <audio id="audio" class="audio-container" autoplay></audio>
+
+                <!-- QR and Pattern Forms -->
+                <form id="qrForm" style="display:none;">
+                    <label for="qrInput">Scanner le QR Code</label>
+                    <input name="qrInput" id="qrInput" type="file">
+                </form>
+                <form id="patternForm" style="display:none;">
+                    <div class="grid-three-fourths">
+                        <input name="patternInput" id="patternInput" type="text" placeholder="C'est à toi...">
+                    </div>
+                    <div class="grid-fourth">
+                        <input name="patternSubmit" id="patternSubmit" type="submit" value ="Et voilà !" class="btn btn-outline"/>
+                    </div>                   
+                </form>                   
+            </div>
+            
+            <!-- Footer (connexions) -->
+                <div id="connexions" class="grid-half float-center"></div>
+            </div>
+
+        </div>
+        
+        <!-- Scripts and JS -->
+        
+        <script type="text/javascript" src="js/jsqrcode/grid.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/version.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/detector.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/formatinf.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/errorlevel.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/bitmat.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/datablock.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/bmparser.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/datamask.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/rsdecoder.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/gf256poly.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/gf256.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/decoder.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/qrcode.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/findpat.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/alignpat.js"></script>
+        <script type="text/javascript" src="js/jsqrcode/databr.js"></script>
+        <script src="js/jxfront.js"></script>
+        <script src="js/jxfront-qrcode.js"></script>
+        <script src="js/jxfront-geoloc.js"></script>
+        <script src="js/app.js"></script>
+        
+        <script>
+
+            $(document).ready(function(){
+                // Target your .container, .wrapper, .post, etc.
+                $("#video-container").fitVids();
+
+            });
+
+            function openNav() {
+                document.getElementById("credits").style.width = "100%";
+            }
+
+            /* Close when someone clicks on the "x" symbol inside the overlay */
+            function closeNav() {
+                document.getElementById("credits").style.width = "0%";
+            }
+
+        </script>
+    </body>
