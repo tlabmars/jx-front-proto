@@ -7,7 +7,7 @@
   
         <link rel="stylesheet" href="css/flexslider.css" type="text/css">
         <link rel="stylesheet" href="css/main.min.css" type="text/css">
-        <link rel="stylesheet" href="css/style-2.css" type="text/css">
+        <link rel="stylesheet" href="css/style-1.css" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900|Karla:400,700,400italic" rel="stylesheet" type="text/css">             
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
         <script src="js/jquery.flexslider-min.js"></script>
@@ -43,39 +43,44 @@
         <div id="container" class="container">
 
             <!-- Header -->
-            <div id="header">
-                <span id="openBtn" onclick="openNav()" class="openbtn">+</span>
-                <div id="headerImage"></div>
-                <div id="headerTitle"></div>
+            <div id="header" class="row">
+                <div class="grid-half float-center">
+                    <span id="openBtn" onclick="openNav()" class="openbtn">+</span>
+                    <div id="headerImage"></div>
+                    <div id="headerTitle"></div>
+                </div>
             </div>
             
             <!-- Content -->
-            <div id="content" class="content">             
-                <!-- Media containers -->
-                <div id="text"></div>
-                <div id="image"></div>
-                <div id="flexslider" class="flexslider">
-                    <ul id="slideshow" class="slides"></ul>
-                </div> 
-                <div id="video" class="video-container"></div>
-                <audio id="audio" class="audio-container" autoplay></audio>
-
-                <!-- QR and Pattern Forms -->
-                <form id="qrForm" style="display:none;">
-                    <label for="qrInput">Scanner le QR Code</label>
-                    <input name="qrInput" id="qrInput" type="file">
-                </form>
-                <form id="patternForm" style="display:none;">
-                    <div class="grid-three-fourths">
-                        <input name="patternInput" id="patternInput" type="text" placeholder="C'est à toi...">
-                    </div>
-                    <div class="grid-fourth">
-                        <input name="patternSubmit" id="patternSubmit" type="submit" value ="Et voilà !" class="btn btn-outline"/>
-                    </div>                   
-                </form>                   
+            <div id="content" class="row">
+                <div class="grid-half float-center">
+                   
+                    <!-- Media containers -->
+                    <div id="text"></div>
+                    <div id="image"></div>
+                    <div id="flexslider" class="flexslider">
+                        <ul id="slideshow" class="slides"></ul>
+                    </div> 
+                    <div id="video" class="video-container"></div>
+                    <audio id="audio" class="audio-container" autoplay></audio>
+                    
+                    <!-- QR and Pattern Forms -->
+                    <form id="qrForm" style="display:none;">
+                        <label for="qrInput">Scanner le QR Code</label>
+                        <input name="qrInput" id="qrInput" type="file">
+                    </form>
+                    <form id="patternForm" style="display:none;">
+                        <div class="grid-three-fourths">
+                            <input name="patternInput" id="patternInput" type="text" placeholder="C'est à toi...">
+                        </div>
+                        <div class="grid-fourth">
+                            <input name="patternSubmit" id="patternSubmit" type="submit" value ="Et voilà !" class="btn btn-outline"/>
+                        </div>                   
+                    </form>                   
+                </div>
             </div>
-            
             <!-- Footer (connexions) -->
+            <div class="row">
                 <div id="connexions" class="grid-half float-center"></div>
             </div>
 

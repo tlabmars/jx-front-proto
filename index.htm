@@ -20,7 +20,7 @@
         
     </head>
     <body>
-        <div id="container" class="pure-g">
+        <div id="container" class="pure-g" style="z-index:1;">
             <div class="pure-u-1">
                 <div id="header">
                     <ul class="header">
@@ -39,13 +39,14 @@
                     <form id="pattern-form" class="pure-form">
 
                         <fieldset>
-                            <input name="playerInput" id="playerInput" type="text" placeholder="À toi !">
+                            <input name="playerTextInput" id="playerTextInput" type="text" placeholder="À toi !">
                             <input type="submit" />
                         </fieldset>
                     </form>
                 </div>
-                <div id="connections"></div>
+                <div id="connections" style="z-index:2;"></div>
 
+            </div>
         </div>
         
         

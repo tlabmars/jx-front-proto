@@ -1,7 +1,7 @@
 
 //scene en cours, avec la valeur de depart.
-//var currentSceneId = 213;//
-var currentSceneId = 214;
+var currentSceneId = 213;//
+//var currentSceneId = 208;//
 //preparation de jxServer
 var jxServer = new JX.Server();
 
@@ -10,14 +10,29 @@ jxServer.variables.init("latitude", 0);
 jxServer.variables.init("longitude", 0);
 jxServer.variables.init("approche", 0);
 jxServer.variables.init("vue", 0);
+jxServer.variables.init("signe1", 0);
+jxServer.variables.init("signe2", 0);
+jxServer.variables.init("signe3", 0);
+
 
 //initialisation variable pour stockage fonction fullscreen
 var fonctionFullscreen;
+var imageBackground = 0;
+var colorBackground = 0;
+var audioPlaying = 0;
+var patternFormDisplayed = 0;
+//var qrFormDisplayed = 0;//
+
+
+document.getElementById("qrForm").style.display = "none";
+document.getElementById("patternForm").style.display = "none";
+
+console.log("Here we go again")
 
 //tente de lire les valeurs du localstorage
 jxServer.variables.readLocal();
 
-
+//verifie si la géolocalisation est supportée / activée
 if("geolocation" in navigator) {
     
     jxServer.handleLatitudeLongitude();
@@ -26,6 +41,8 @@ else {
     alert("Hmmm... pour entrer dans ma tête, tu dois accepter de me dire où tu es :- )");
 }
 
+// active détection QR COde
+// jxServer.listenImageCode(document.getElementById("qrInput"), jxServer.redirectToUrl);
 
 //cette fonction sera appellee quand le JSON de la scene sera recu.
 var handleScene = function(jsonData){
@@ -37,23 +54,25 @@ var handleScene = function(jsonData){
     
 
     //pointe vers les elements HTML
-    //var containerElement = document.getElementById("container"); 
     var mainElement = document.getElementById("container"); 
+    var openbtnElement = document.getElementById("openBtn"); 
     var imgHeaderElement = document.getElementById("headerImage");
     var titleHeaderElement = document.getElementById("headerTitle");
+    var contentElement = document.getElementById("content");
     var txtElement = document.getElementById("text");  
     var imageElement = document.getElementById("image");
     var slideshowContainerElement = document.getElementById("flexslider");
     var slideshowElement = document.getElementById("slideshow");
     var videoElement = document.getElementById("video");
     var audioElement = document.getElementById("audio");
-    var dataElement = document.getElementById("data");	
+    /* var dataElement = document.getElementById("data"); */	
     var patternElement = document.getElementById("patternForm");
     var patternInputElement = document.getElementById("patternInput");
+    var patternSubmitElement = document.getElementById("patternSubmit");
     var qrElement = document.getElementById("qrForm");
     var qrInputElement = document.getElementById("qrInput");
-    var connexionElement = document.getElementById("connexions");
-    
+    var connexionElement = document.getElementById("connexions");  
+
 
     //reset elements
     titleHeaderElement.innerHTML = "";
@@ -63,13 +82,10 @@ var handleScene = function(jsonData){
     slideshowElement.innerHTML = "";
     videoElement.innerHTML = "";
     audioElement.innerHTML = "";
-    dataElement.innerHTML = "";
-    patternElement.innerHTML = "";
-    //patternInputElement.value="";//
-    qrElement.innerHTML = "";
-    //qrInputElement.value="";
+    /* dataElement.innerHTML = ""; */
+    patternInputElement.value="";
+    //qrInputElement.value="";//
     connexionElement.innerHTML = "";
-    audioElement.innerHTML = "";
     slideshowContainerElement.style.display = "none";
     
     //supprime l'eventListener sur #main
@@ -81,42 +97,92 @@ var handleScene = function(jsonData){
 
     }
     
-    mainElement.style.backgroundImage = "none";
+    //pause audio
+    if(audioPlaying >= 1){
+            audioElement.pause();
+            console.log("Audio paused")
+        }
+           
+    //rétablit l'image de fond sur #main 
+    if (imageBackground >= 1) {
+        console.log("Image background rétablie");
+        mainElement.style.backgroundImage = "url(img/wave.png)";
+        mainElement.style.backgroundRepeat = "no-repeat";
+        mainElement.style.backgroundPosition = "35% 10";
+        mainElement.style.backgroundSize = "";
+
+    }
+    
+    //rétablit la couleur de fond sur #main 
+    if (colorBackground >= 1) {
+        mainElement.style.backgroundColor = "white";
+        openbtnElement.style.color = "blue";
+        mainElement.style.color = "blue";
+        console.log("Couleur background rétablie");
+    }
+    
+    
+     //masque le formulaire de saisie texte
+    if (patternFormDisplayed >= 1) {
+            patternForm.style.display = "none";
+    }
+    
+    // affiche ou masque le formulaire pour envoi photo QRcode
+    
+   // if (jsonData.data == "qrcode"){
+    //    document.getElementById("qrcode-form").style.display = "block";
+    //    qrFormDisplayed += 1;
+
+    // }
+    // if (qrFormDisplayed >= 1) {
+    //    patternForm.style.display = "none";
+    // }  
 
     //prise en compte des actions (mise a jour des variables de la scène, s'il y en a)
     jxServer.variables.update(jsonData.actions);
-    
-    // affichage variables utilisateur
-    var currentLatitude = jxServer.variables.get("latitude");
-    var currentLongitude = jxServer.variables.get("longitude");
-    
-    if (currentLatitude === 0 && currentLongitude === 0 ){
-    
-        dataElement.innerHTML = "Latitude : inconnue <br />Longitude : inconnue<br />";
-    
-    }
-    else {
-    
-        dataElement.innerHTML = "Latitude : " + jxServer.variables.get("latitude");
-        dataElement.innerHTML += "<br />Longitude : " + jxServer.variables.get("longitude");
-    
-    }
-    
-    dataElement.innerHTML += "<br />Tentatives d'approche : " + jxServer.variables.get("approche");
-    
-    // if(vue >= 1 ){} affichage progrès utilisateur à faire //
 
-    
+    // affichage medias associés à la scène
     jsonData.medias.forEach(function(item){
         
         
         //arrière-plan  de la scène
         
+         if (item.format == "image-cover") {
+            var imageUrl = "url(" + item.content + ")";
+            mainElement.style.backgroundImage = imageUrl;
+            mainElement.style.backgroundPosition = "center";
+            mainElement.style.backgroundSize = "cover"; 
+            imageBackground += 1;
+             console.log("Image background changée : imageBackground =" + imageBackground)
+        }
+        
         if (item.format == "image-background") {
             var imageUrl = "url(" + item.content + ")";
-            document.getElementById("container").style.backgroundImage = imageUrl;
-            document.getElementById("container").style.backgroundPosition = "center";
-            document.getElementById("container").style.backgroundSize = "cover";
+            mainElement.style.backgroundImage = imageUrl;
+            mainElement.style.backgroundRepeat = "no-repeat";
+            mainElement.style.backgroundSize = "";
+            
+            if(currentSceneId == 214 || currentSceneId == 215){
+                
+                mainElement.style.backgroundPosition = "40% 30%";
+            
+            } else {
+                
+                mainElement.style.backgroundPosition = "80% 70%";
+            }
+            imageBackground += 1;
+            console.log("Image background changée : imageBackground =" + imageBackground)
+
+        } 
+        
+        if (item.format == "color-background") {
+            mainElement.style.backgroundColor = item.content;
+            mainElement.style.backgroundImage = "none";
+            openbtnElement.style.color = "white";
+            mainElement.style.color = "white";
+            
+            colorBackground += 1;
+             console.log("Couleur background changée : imageBackground =" + colorBackground)
         }
 
         //pictogramme de la scène
@@ -131,11 +197,20 @@ var handleScene = function(jsonData){
         if (item.format == "title") {      
             titleHeaderElement.innerHTML += "<h1>" + item.content + "</h1>";
         } 
+        
+        if (item.format == "title-fullscreen") {      
+            titleHeaderElement.innerHTML += "<h1 style='text-transform: none; font-size:200%; font-weight:700; position:absolute; top:20%; right:20%;'>" + item.content + "</h1>";
+
+        }
 
         // textes de la scène
         if (item.format == "text") {
             txtElement.innerHTML += "<p>" + item.content + "</p>";	
+        }
+        if (item.format == "text-fullscreen") {
+            txtElement.innerHTML += "<p style='font-size:120%; font-weight:700; position:absolute; bottom:10%; left:10%;width:60%;text-align:left;'>" + item.content + "</p>";
         } 
+        
         // images de la scène
         if (item.format == "image") {
             var newImageElement = document.createElement("img");
@@ -143,7 +218,7 @@ var handleScene = function(jsonData){
             newImageElement.setAttribute("class", "pure-img");
             imageElement.appendChild(newImageElement);
         }
-        // images de la scène
+        // slideshow de la scène
         if (item.format == "slideshow") {
             document.getElementById("flexslider").style.display = "block";
             slideshowElement.innerHTML += "<li> <img src='" + item.content + "' /></li>";           
@@ -160,15 +235,23 @@ var handleScene = function(jsonData){
         
         // audio de la scène
         if (item.format == "audio") {
-                audioElement.innerHTML += "<source src='" + item.content + "' />";          
+                audioElement.innerHTML += "<source src='" + item.content + "' />";
+                audioPlaying = 1;
+                console.log("Audio playing : audioPlaying =" + audioPlaying)
+            
         }
     });
 
+    // Connexions
     jsonData.connections.forEach(function(item){
+        // Conditionnées par mot(s) clé(s) : pattern
         if (! item.label) {
+            patternForm.style.display = "inline";
+            patternFormDisplayed += 1;
             return;
         }
         
+        // lien sur tout l'écran (container), compatible avec connexions standard
         if (item.label == "fullscreen-link"){
             
             fonctionFullscreen = function(){
@@ -186,9 +269,7 @@ var handleScene = function(jsonData){
             };
 
             mainElement.addEventListener("click", fonctionFullscreen);
-            mainElement.setAttribute("class","container active")
-            //mainElement.addClass("active");//
-            console.log(mainElement);
+            mainElement.setAttribute("class","container active");
             
 
         } else {
@@ -209,6 +290,8 @@ var handleScene = function(jsonData){
             
             } else {
                 
+                // lien sur image avec détection liens visités
+                
                 if(item.position == "200"){
                     
                     var newConnexionElement = document.createElement("img");
@@ -227,7 +310,7 @@ var handleScene = function(jsonData){
                     
                     }                    
                     
-                    newConnexionElement.addEventListener("click", function(e){
+                    newConnexionElement.addEventListener("click", function(){
                         localStorage.setItem(item.childSceneId, 'vu');
                         jxServer.requestScene(item.childSceneId, handleScene);                        
 
@@ -236,6 +319,21 @@ var handleScene = function(jsonData){
                     connexionElement.appendChild(newConnexionElement);
                 
                 } else {
+                    
+                    if(item.label == "back"){
+                        
+                        var newConnexionElement = document.createElement("a");
+                        newConnexionElement.setAttribute("style", "font-family:'Karla', sans-serif; color:darkgrey; font-size:90%;text-decoration:none;");
+                        newConnexionElement.innerHTML = "< Revenir sur mes pas";
+
+                        newConnexionElement.addEventListener("click", function(){
+                            jxServer.requestScene(item.childSceneId, handleScene);
+                        });
+
+                        connexionElement.appendChild(newConnexionElement);                 
+                    
+                    } else {
+                                     
                     var newConnexionElement = document.createElement("button");
                     newConnexionElement.setAttribute("class", "btn btn-primary"); 
                     newConnexionElement.setAttribute("style", "margin-right:20px;");
@@ -246,7 +344,8 @@ var handleScene = function(jsonData){
                     });
 
                     connexionElement.appendChild(newConnexionElement);
-                    }
+                    } 
+                }
 
             }
             
@@ -271,6 +370,8 @@ var handleScene = function(jsonData){
         initDelay: 600,
         start: function(){
             console.log("Flexslider done!");
+            /* mainElement.resize(); */
+            
         },
     });
 

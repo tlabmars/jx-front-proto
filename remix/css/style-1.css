@@ -1,0 +1,186 @@
+
+body {
+    background-color: blue;
+    color:blue;
+    font-family: 'Playfair Display', serif;
+    font-size:18px;
+    line-height:1.6;
+    padding:2.5%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family:'Karla', 'Helvetica Neue', Helvetica, sans serif;
+    text-transform: uppercase;
+    font-weight: 700;
+
+}
+a {
+    color:blue;
+}
+a:hover {
+    color:cyan;
+}
+/* OVERLAY STYLING */
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+    height: 100%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color:blue; /* Black fallback color */
+    /* background-color: rgba(0,0,0, 0.9);  Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+.overlay-content {
+    position: relative;
+    top: 25%; /* 25% from the top */
+    width: 80%; /* 100% width */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center; /* Centered text/links */
+    /* margin-top: 30px;  30px top margin to avoid conflict with the close button on smaller screens */
+    font-size:80%;
+}
+
+/* .overlay-container (
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+}*/
+
+.overlay-content h1, .overlay-content > p {
+
+    color:white;
+}
+
+.closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px !important; /* Override the font-size specified earlier (36px) for all navigation links */
+    color:white;
+}
+.closebtn:hover {
+    text-decoration:none;
+
+}
+
+.openbtn {
+    position: fixed;
+    top: 8%;
+    left: 8%;
+    font-size: 2rem;
+    font-weight:700;
+    cursor:pointer;
+    color:blue;
+    /*-webkit-transform: rotate(-90deg);*/
+
+}
+
+/* ELEMENTS */
+#header {
+    margin: 3rem 0;
+
+}
+
+#connexions {
+    margin-top: 3rem;
+
+}
+.container {
+    min-height:100%;
+    width: 100%;
+    padding-bottom:5%;
+    text-align: center;               
+    background-color: white;
+    background-image:url(../img/wave.png);
+    background-position:35% 10%;
+    background-repeat:no-repeat;
+
+}
+.active {
+
+    cursor:pointer;
+}
+.btn {
+    background-color:blue;
+    border: 1px solid blue;
+    font-family:'Karla', 'Helvetica Neue', Helvetica, sans serif;
+    text-transform:uppercase;
+    color:white;
+}
+
+.btn-outline {
+    background-color: white;
+    border: 1px solid blue;
+    color: blue;           
+}
+.btn:hover{
+    background-color:black;
+    color: white;
+}
+
+.btn-outline:hover {
+    background-color: blue;
+    color: white; 
+
+}
+
+img {
+    -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
+    filter: grayscale(100%);
+    margin-right:15px;
+}
+.img-color {
+    /* border-radius:100%;
+    height:auto;*/
+    margin-right:15px;
+    filter: none;
+    -webkit-filter:none;
+}
+
+
+#patternForm {     
+    margin-top:3rem;
+}
+
+input {
+    border-bottom: 2px solid blue !important;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    color:blue !important;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .overlay-content {
+        margin-top: 20px;
+    }
+    .openbtn {
+        top: 2%;
+    }
+
+
+
+    #connexions {
+        margin-top: 3rem;
+
+    }
+
+    #patternForm{
+        position:fixed;
+        bottom : 5%;
+        left:7%;
+
+    } 
+    input[type=submit]{
+
+        width:50%
+    }
+    .flex-viewport {
+        max-width:350px;
+        max-height: 262px;
+}
