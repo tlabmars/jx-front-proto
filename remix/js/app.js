@@ -9,8 +9,8 @@ if (window.location.hash){
 } else {
     
     //scene en cours, avec la valeur de depart.
-    //var currentSceneId = 208;//
-    var currentSceneId = 214;//
+    var currentSceneId = 213;
+    //var currentSceneId = 214;//
     console.log ("Entrée sur scène départ");
 }
 
@@ -244,8 +244,8 @@ var handleScene = function(jsonData){
         if (item.format == "video") {
                 var newVideoElement = document.createElement("iframe");
                 newVideoElement.setAttribute("src", item.content);
-                slideshowContainerElement.style.width = "600";
-                slideshowContainerElement.style.height = "auto";
+                newVideoElement.style.minWidth = "90%";
+                newVideoElement.style.minHeight = "auto";
             
                 videoElement.appendChild(newVideoElement);          
         }
@@ -345,6 +345,7 @@ var handleScene = function(jsonData){
                         var newConnexionElement = document.createElement("a");
                         newConnexionElement.setAttribute("style", "font-family:'Karla', sans-serif; color:darkgrey; font-size:90%;text-decoration:none;");
                         newConnexionElement.innerHTML = "< Revenir sur mes pas";
+                        newConnexionElement.style.cursor = "pointer";
 
                         newConnexionElement.addEventListener("click", function(){
                             jxServer.requestScene(item.childSceneId, handleScene);

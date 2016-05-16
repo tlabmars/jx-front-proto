@@ -218,6 +218,9 @@ input {
     border-right: none;
     color:blue !important;
 }
+embed, iframe {
+    border: none;
+}
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .overlay-content {

@@ -12,9 +12,21 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
         <script src="js/jquery.flexslider-min.js"></script>
         <script src="js/jquery.fitvids.js"></script>
+        
+        <!-- Loading... -->
+        <script>
+            $(window).load(function() {
+                // Animate loader off screen
+                $(".loading-icon").fadeOut("slow");;
+            });
+        </script>
 
     </head>
     <body>
+        <!-- Loading... -->
+        <div class="loading-icon"></div>
+        
+        <!-- Credits Overlay... -->              
         <div id="credits" class="overlay">
 
             <!-- Button to close the overlay navigation -->
@@ -40,6 +52,8 @@
             </div>
 
         </div>
+        
+        <!-- The Good Stuff, main container... --> 
         <div id="container" class="container">
 
             <!-- Header -->
