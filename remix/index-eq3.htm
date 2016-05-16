@@ -5,10 +5,18 @@
 
         <title>LE RÉVEIL DE LA JOLIETTE - JOLIETTE CONNEXIONS</title>
   
+        <!-- FLEXSLIDER STYLESHEET -->
         <link rel="stylesheet" href="css/flexslider.css" type="text/css">
+        <!-- KRAKEN STYLESHEET -->
         <link rel="stylesheet" href="css/main.min.css" type="text/css">
+        <!-- FONTAWESOME STYLESHEET -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> 
+        <!-- GOOGLE FONTS --> 
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900|Karla:400,700,400italic" rel="stylesheet" type="text/css"> 
+        <!-- PROJECT STYLESHEET -->
         <link rel="stylesheet" href="css/style-3.css" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900|Karla:400,700,400italic" rel="stylesheet" type="text/css">             
+        
+        <!-- JAVASCRIPT -->                   
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
         <script src="js/jquery.flexslider-min.js"></script>
         <script src="js/jquery.fitvids.js"></script>
@@ -55,8 +63,10 @@
 
                 <!-- QR and Pattern Forms -->
                 <form id="qrForm" style="display:none;">
-                    <label for="qrInput">Scanner le QR Code</label>
-                    <input name="qrInput" id="qrInput" type="file">
+                    <div class="grid-two-thirds float-center">
+                        <label for="qrInput">Scanner le QR Code</label>
+                        <input name="qrInput" id="qrInput" type="file">
+                    </div>
                 </form>
                 <form id="patternForm" style="display:none;">
                     <div class="grid-three-fourths">
@@ -65,7 +75,7 @@
                     <div class="grid-fourth">
                         <input name="patternSubmit" id="patternSubmit" type="submit" value ="Et voilà !" class="btn btn-outline"/>
                     </div>                   
-                </form>                   
+                </form>                  
             </div>
             
             <!-- Footer (connexions) -->

@@ -10,7 +10,7 @@ if (window.location.hash){
     
     //scene en cours, avec la valeur de depart.
     //var currentSceneId = 208;//
-    var currentSceneId = 213;//
+    var currentSceneId = 214;//
     console.log ("Entrée sur scène départ");
 }
 
@@ -31,7 +31,7 @@ var imageBackground = 0;
 var colorBackground = 0;
 var audioPlaying = 0;
 var patternFormDisplayed = 0;
-//var qrFormDisplayed = 0;//
+var qrFormDisplayed = 0;
 
 
 document.getElementById("qrForm").style.display = "none";
@@ -104,8 +104,9 @@ var handleScene = function(jsonData){
     if (fonctionFullscreen) {
 
         mainElement.removeEventListener("click", fonctionFullscreen);
-        //mainElement.removeClass("active");//
+        jQuery("#container").removeClass("active");
         fonctionFullscreen = undefined;
+        console.log("Fullscreen off");
 
     }
     
@@ -118,10 +119,11 @@ var handleScene = function(jsonData){
     //rétablit l'image de fond sur #main 
     if (imageBackground >= 1) {
         console.log("Image background rétablie");
-        mainElement.style.backgroundImage = "url(images/wave.png)";
-        mainElement.style.backgroundRepeat = "no-repeat";
-        mainElement.style.backgroundPosition = "35% 10";
+        mainElement.style.backgroundImage = "";
+        mainElement.style.backgroundRepeat = "";
+        mainElement.style.backgroundPosition = "";
         mainElement.style.backgroundSize = "";
+        jQuery("#container").addClass("background-default");
 
     }
     
@@ -139,16 +141,19 @@ var handleScene = function(jsonData){
             patternForm.style.display = "none";
     }
     
-    // affiche ou masque le formulaire pour envoi photo QRcode
+   // affiche ou masque le formulaire pour envoi photo QRcode
     
-   // if (jsonData.data == "qrcode"){
-    //    document.getElementById("qrcode-form").style.display = "block";
-    //    qrFormDisplayed += 1;
+   if (jsonData.data == "qrcode"){
+    document.getElementById("qrForm").style.display = "block";
+     //qrFormDisplayed += 1;
 
-    // }
+    } else {
+        document.getElementById("qrForm").style.display = "none";
+    }
     // if (qrFormDisplayed >= 1) {
-    //    patternForm.style.display = "none";
-    // }  
+    //   qrElement.style.display = "none";
+    //    console.log(qrFormDisplayed);
+    //}  
 
     //prise en compte des actions (mise a jour des variables de la scène, s'il y en a)
     jxServer.variables.update(jsonData.actions);
@@ -211,7 +216,7 @@ var handleScene = function(jsonData){
         } 
         
         if (item.format == "title-fullscreen") {      
-            titleHeaderElement.innerHTML += "<h1 style='text-transform: none; font-size:200%; font-weight:700; position:absolute; top:20%; right:20%;'>" + item.content + "</h1>";
+            titleHeaderElement.innerHTML += "<h1 class='title-fullscreen'>" + item.content + "</h1>";
 
         }
 
@@ -220,7 +225,7 @@ var handleScene = function(jsonData){
             txtElement.innerHTML += "<p>" + item.content + "</p>";	
         }
         if (item.format == "text-fullscreen") {
-            txtElement.innerHTML += "<p style='font-size:120%; font-weight:700; position:absolute; bottom:10%; left:10%;width:60%;text-align:left;'>" + item.content + "</p>";
+            txtElement.innerHTML += "<p class='text-fullscreen'>" + item.content + "</p>";
         } 
         
         // images de la scène
@@ -271,17 +276,19 @@ var handleScene = function(jsonData){
                 if (fonctionFullscreen) {
 
                     mainElement.removeEventListener("click", fonctionFullscreen);
-                    //mainElement.removeClass("active");//
+                    jQuery("#container").removeClass("active");
                     fonctionFullscreen = undefined;
+                    console.log("Fullscreen off");
 
                 }
-
+                
                 jxServer.requestScene(item.childSceneId, handleScene);
 
             };
 
             mainElement.addEventListener("click", fonctionFullscreen);
-            mainElement.setAttribute("class","container active");
+            //mainElement.setAttribute("class","container active");
+            jQuery("#container").addClass("active");
             
 
         } else {
@@ -290,6 +297,7 @@ var handleScene = function(jsonData){
                 
                 var newConnexionElement = document.createElement("a");
                 newConnexionElement.setAttribute("style", "text-decoration:underline;");
+                newConnexionElement.setAttribute("class", "active");
                 newConnexionElement.innerHTML = "Passer l'intro";
 
                 newConnexionElement.addEventListener("click", function(){
@@ -345,17 +353,34 @@ var handleScene = function(jsonData){
                         connexionElement.appendChild(newConnexionElement);                 
                     
                     } else {
-                                     
-                    var newConnexionElement = document.createElement("button");
-                    newConnexionElement.setAttribute("class", "btn btn-primary"); 
-                    newConnexionElement.setAttribute("style", "margin-right:20px;");
-                    newConnexionElement.innerHTML = item.label;
+                        
+                        if (item.label == "next") {
 
-                    newConnexionElement.addEventListener("click", function(){
-                        jxServer.requestScene(item.childSceneId, handleScene);
-                    });
+                            var newConnexionElement = document.createElement("i");
+                            newConnexionElement.setAttribute("class", "fa fa-chevron-right fa-2x active");
+                            newConnexionElement.addEventListener("click", function(){
+                                jxServer.requestScene(item.childSceneId, handleScene);
+                            });
 
-                    connexionElement.appendChild(newConnexionElement);
+                            connexionElement.appendChild(newConnexionElement);
+
+                        }
+                        
+                        else {
+                            
+                            var newConnexionElement = document.createElement("button");
+                            newConnexionElement.setAttribute("class", "btn btn-primary"); 
+                            newConnexionElement.setAttribute("style", "margin-right:20px;");
+                            newConnexionElement.innerHTML = item.label;
+
+                            newConnexionElement.addEventListener("click", function(){
+                                jxServer.requestScene(item.childSceneId, handleScene);
+                            });
+
+                            connexionElement.appendChild(newConnexionElement);
+                            
+                        }                                    
+                    
                     } 
                 }
 
@@ -398,12 +423,14 @@ var handlePatternFailure = function(message, data){
 }
 
 //gestion de la validation du formulaire
-document.querySelector("#patternForm").addEventListener("submit", function(){
-
+document.querySelector("#patternForm").addEventListener("submit", function(e){
+    e.preventDefault(); // intercepte comportement par défaut ici rafraichissement de la page
     var theInput = document.querySelector("#patternInput").value;
     console.log("Form submitted with value : " + theInput);
+    
 
     //demande au serveur la scene correspondant a la saisie (en passant les fonctions "handlePatternResponse" et "handlePatternFailure")
+    
     jxServer.checkPattern(currentSceneId, theInput, handlePatternResponse, handlePatternFailure);	
 });
 
@@ -412,17 +439,17 @@ document.querySelector("#patternForm").addEventListener("submit", function(){
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
 jxServer.requestScene(currentSceneId, handleScene);
-//jxServer.listenImageCode(document.querySelector("#qrInput"), jxServer.redirectToUrl);
+jxServer.listenImageCode(document.querySelector("#qrInput"), jxServer.redirectToUrl);
 
 //gestion de la validation du formulaire
-document.querySelector("#patternSubmit").addEventListener("click", function(){
-    var res = confirm("Reset variables + reload ?");
+// document.querySelector("#patternSubmit").addEventListener("click", function(){
+//    var res = confirm("Reset variables + reload ?");
+//
+ //   if (res) {
+ //       jxServer.variables.resetLocal();
+//        window.location.reload();
+//    }
 
-    if (res) {
-        jxServer.variables.resetLocal();
-        window.location.reload();
-    }
-
-});
+//});
 
 

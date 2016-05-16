@@ -42,7 +42,7 @@ a:hover {
     margin-right: auto;
     text-align: center; /* Centered text/links */
     /* margin-top: 30px;  30px top margin to avoid conflict with the close button on smaller screens */
-    font-size:80%;
+    font-size:110%;
 }
 
 /* .overlay-container (
@@ -158,6 +158,7 @@ input {
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .overlay-content {
         margin-top: 20px;
+        font-size:80%;
     }
     .openbtn {
         top: 2%;

@@ -119,6 +119,35 @@ a:hover {
 
 }
 
+/* FULLSCREEN STYLING */
+
+.title-fullscreen {
+    text-transform: none; 
+    font-size:200%; 
+    font-weight:700; 
+    position:absolute; 
+    top:20%; 
+    right:20%;
+}
+p.text-fullscreen {
+    font-size:120%; 
+    font-weight:700; 
+    position:absolute; 
+    bottom:10%; 
+    left:10%;
+    width:60%;
+    text-align:left;
+}
+
+.background-default {
+
+    background-image: url(images/wave.png);
+    background-repeat: no-repeat;
+    background-position-x: 35%;
+    background-position-y: 10px;
+    background-size: auto;
+}
+
 /* ELEMENTS */
 
 .active {

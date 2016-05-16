@@ -12,8 +12,8 @@ JX.Server = function(){
 	this.redirectMessage = "Etes vous sûr de vouloir aller sur ?";
 
 	//personnal dev conf
-	if (window.location.href.indexOf("jxwriter.local") != -1){
-		this.baseUrl = "https://jxwriter.local/app_dev.php/";
+	if (window.location.href.indexOf("localhost") != -1){
+		this.baseUrl = "http://localhost/jx-writer/web/";
 	}
 
 	this.variables = new JX.Vars();
