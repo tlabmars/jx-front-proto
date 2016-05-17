@@ -385,9 +385,9 @@ var handleScene = function(jsonData){
     
                                     jxServer.requestScene(311, handleScene);
 
-                                    } else {
+                                } else {
 
-                                    jxServer.requestScene(currentSceneId, handleScene);
+                                    jxServer.requestScene(item.childSceneId, handleScene);
                                 }
                             });
 
