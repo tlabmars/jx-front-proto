@@ -1,5 +1,4 @@
 
-
 JX.Server.prototype.handleLatitudeLongitude = function(callbackReady, callbackNotReady){
 
 	JX.log("Handle latitude and longitude...");
@@ -12,12 +11,15 @@ JX.Server.prototype.handleLatitudeLongitude = function(callbackReady, callbackNo
 	if (! callbackReady) {
 		callbackReady = function(){};
 	}
+    
+    var self = this;
 
 	if (! callbackNotReady) {
-		callbackNotReady = function(){};
+		callbackNotReady = function(){
+            self.variables.set("geolocDenied", "1");
+        
+        };
 	}
-
-	var self = this;
 
 	var watchPosition = function(event) {
 		JX.log("GEOLOC OK, updating variables : ", event);
@@ -43,7 +45,7 @@ JX.Server.prototype.handleLatitudeLongitude = function(callbackReady, callbackNo
 }
 
 JX.Server.prototype.disableLatitudeLongitude = function(){
-	if (this.watchPositionId == undefined) {
+	if (this.watchPositionId === undefined) {
 		return;
 	}
 

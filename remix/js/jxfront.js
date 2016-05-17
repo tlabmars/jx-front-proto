@@ -9,7 +9,7 @@ JX.Server = function(){
 
 	//prod conf
 	this.baseUrl = "https://jx.tlabmars.org/sandbox/prototypes/jx-writer/web/";
-	this.redirectMessage = "Etes vous sûr de vouloir aller sur ?";
+	//this.redirectMessage = "Etes vous sûr de vouloir aller sur ?";
 
 	//personnal dev conf
 	if (window.location.href.indexOf("localhost") != -1){

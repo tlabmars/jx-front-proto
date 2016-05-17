@@ -8,10 +8,10 @@ if (window.location.hash){
     console.log ("Redirigé vers " + currentSceneId);
 } else {
     
-    //scene en cours, avec la valeur de depart.
-    var currentSceneId = 213;
-    //var currentSceneId = 214;//
-    console.log ("Entrée sur scène départ");
+        //scene en cours, avec la valeur de depart.
+        var currentSceneId = 213;
+        //var currentSceneId = 214;//
+        console.log ("Entrée sur scène départ");
 }
 
 //initialisation des variables 
@@ -23,6 +23,7 @@ jxServer.variables.init("signe1", 0);
 jxServer.variables.init("signe2", 0);
 jxServer.variables.init("signe3", 0);
 jxServer.variables.init("geoloc", 0);
+jxServer.variables.init("geolocDenied", 0);
 
 
 //initialisation variables pour gestion affichage éléemnts
@@ -37,7 +38,7 @@ var qrFormDisplayed = 0;
 document.getElementById("qrForm").style.display = "none";
 document.getElementById("patternForm").style.display = "none";
 
-console.log("Here we go again")
+console.log("Here we go again");
 
 //tente de lire les valeurs du localstorage
 jxServer.variables.readLocal();
@@ -50,7 +51,9 @@ if("geolocation" in navigator) {
     
 }
 else {
-    alert("Hmmm... pour entrer dans ma tête, tu dois accepter de me dire où tu es :- )");
+    alert("Hélas... votre antique navigateur ne vous permettra pas de vivre cette expérience ! <br /> A bientôt, dans un navigateur 'moderne' !");
+    console.log("Géolocalisation non supportée !");
+   
 }
 
 // active détection QR COde
@@ -113,7 +116,7 @@ var handleScene = function(jsonData){
     //pause audio
     if(audioPlaying >= 1){
             audioElement.pause();
-            console.log("Audio paused")
+            console.log("Audio paused");
         }
            
     //rétablit l'image de fond sur #main 
@@ -170,7 +173,7 @@ var handleScene = function(jsonData){
             mainElement.style.backgroundPosition = "center";
             mainElement.style.backgroundSize = "cover"; 
             imageBackground += 1;
-             console.log("Image background changée : imageBackground =" + imageBackground)
+             console.log("Image background changée : imageBackground =" + imageBackground);
         }
         
         if (item.format == "image-background") {
@@ -188,7 +191,7 @@ var handleScene = function(jsonData){
                 mainElement.style.backgroundPosition = "80% 70%";
             }
             imageBackground += 1;
-            console.log("Image background changée : imageBackground =" + imageBackground)
+            console.log("Image background changée : imageBackground =" + imageBackground);
 
         } 
         
@@ -199,7 +202,7 @@ var handleScene = function(jsonData){
             mainElement.style.color = "white";
             
             colorBackground += 1;
-             console.log("Couleur background changée : imageBackground =" + colorBackground)
+             console.log("Couleur background changée : imageBackground =" + colorBackground);
         }
 
         //pictogramme de la scène
@@ -254,7 +257,7 @@ var handleScene = function(jsonData){
         if (item.format == "audio") {
                 audioElement.innerHTML += "<source src='" + item.content + "' />";
                 audioPlaying = 1;
-                console.log("Audio playing : audioPlaying =" + audioPlaying)
+                console.log("Audio playing : audioPlaying =" + audioPlaying);
             
         }
     });
@@ -375,7 +378,17 @@ var handleScene = function(jsonData){
                             newConnexionElement.innerHTML = item.label;
 
                             newConnexionElement.addEventListener("click", function(){
-                                jxServer.requestScene(item.childSceneId, handleScene);
+                                
+                                var geolocDenied = jxServer.variables.get("geolocDenied");
+                                
+                                if(currentSceneId == 213 && geolocDenied == "1"){
+    
+                                    jxServer.requestScene(311, handleScene);
+
+                                    } else {
+
+                                    jxServer.requestScene(currentSceneId, handleScene);
+                                }
                             });
 
                             connexionElement.appendChild(newConnexionElement);
@@ -439,7 +452,9 @@ document.querySelector("#patternForm").addEventListener("submit", function(e){
 //c'est ici que ca demarre : lance la requete pour la premiere scene.
 //si une scene est trouvee, il appelera la fonction "handleScene"
 //******
+        
 jxServer.requestScene(currentSceneId, handleScene);
+
 jxServer.listenImageCode(document.querySelector("#qrInput"), jxServer.redirectToUrl);
 
 //gestion de la validation du formulaire
