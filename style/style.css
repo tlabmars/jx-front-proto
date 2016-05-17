@@ -1,15 +1,54 @@
-#fileFormLabel {
-	border: 1px solid black;
-	padding: 0.5em;
-
-	display: block;
+h1 {
+	display: none;
 }
 
-#fileForm input {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+#medias img {
+	width: 100%;
+}
+
+#connections{
+	padding: 0;
+	overflow: auto;
+}
+
+#connections li {
+	list-style: none;
+
+	padding: 2%;
+	margin: 2%;
+
+	text-align: center;
+	cursor: pointer; 
+	
+	width: 20%;
+	float:right;
+}
+
+#connections li img {
+	width: 100%;
+}
+
+.qcm #connections li {
+	float:none;
+	width: 92%;
+	
+	background: #dedede;
+}
+
+
+.portrait #connections li {
+	float:left;
+	width: 50%;
+	margin: 0%;
+
+	background: #dedede;
+}
+
+/*nb_* = nombre de connexions trouvées*/
+.portrait #connections.nb_3 li {
+	width: 33.3%;
+}
+
+.portrait #connections.nb_4 li {
+	width: 25%;
 }
